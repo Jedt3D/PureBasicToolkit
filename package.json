@@ -1,9 +1,9 @@
 {
   "name": "purebasic-toolkit",
   "displayName": "PureBasic Toolkit",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "publisher": "worajedt",
-  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, and check/compile/run commands.",
+  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, diagnostics, and check/compile/run commands.",
   "license": "MIT",
   "icon": "media/icon.png",
   "galleryBanner": {
@@ -20,7 +20,8 @@
   },
   "categories": [
     "Programming Languages",
-    "Snippets"
+    "Snippets",
+    "Linters"
   ],
   "keywords": [
     "purebasic",
@@ -29,7 +30,9 @@
     "syntax-highlighting",
     "snippets",
     "compiler",
-    "language-support"
+    "language-support",
+    "offline-docs",
+    "diagnostics"
   ],
   "engines": {
     "vscode": "^1.90.0"
@@ -128,6 +131,31 @@
           "when": "editorLangId == purebasic"
         }
       ]
+    },
+    "configuration": {
+      "title": "PureBasic Toolkit",
+      "properties": {
+        "purebasic.diagnostics.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable PureBasic Toolkit diagnostics for PureBasic source files."
+        },
+        "purebasic.diagnostics.requireEnableExplicit": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a diagnostic when EnableExplicit is missing from a PureBasic source file."
+        },
+        "purebasic.diagnostics.consoleExecutableFormatHint": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a hint when console APIs are detected so book examples are easier to run from the PureBasic IDE."
+        },
+        "purebasic.diagnostics.preferXIncludeFile": {
+          "type": "boolean",
+          "default": true,
+          "description": "Suggest XIncludeFile when IncludeFile is used for shared .pbi files."
+        }
+      }
     }
   }
 }

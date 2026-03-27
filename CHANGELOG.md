@@ -6,6 +6,22 @@ The format is based on Keep a Changelog and the project follows Semantic Version
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-03-27
+
+### Added
+
+- lightweight PureBasic-aware diagnostics for:
+  - missing `EnableExplicit`
+  - console executable format guidance for console-heavy book examples
+  - `IncludeFile` to `XIncludeFile` suggestions for shared `.pbi` includes
+- user settings under `purebasic.diagnostics.*` to tune the new diagnostics
+
+### Changed
+
+- bumped the extension to its first Phase 4 diagnostics baseline
+- expanded Marketplace metadata to reflect diagnostics support
+- updated the README and release docs for the new diagnostics workflow
+
 ## [0.3.0] - 2026-03-27
 
 ### Added

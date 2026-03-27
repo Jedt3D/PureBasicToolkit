@@ -4,12 +4,13 @@
 
 PureBasic editor support for VS Code, developed from a clean-start scaffold in this repository and grounded in the official PureBasic help and example corpus.
 
-## What Ships in 0.3.0
+## What Ships in 0.4.0
 
 - PureBasic file recognition for `.pb`, `.pbi`, and `.pbp`
 - donor-based syntax highlighting tuned against real PureBasic sources
 - curated snippets and starter templates for console and window applications
 - hover docs for recognized PureBasic commands and topics
+- lightweight PureBasic-aware diagnostics for common setup and style gotchas
 - `PureBasic: Open Documentation for Symbol`
 - `PureBasic: Check Syntax Current File`
 - `PureBasic: Compile Current File`
@@ -41,7 +42,7 @@ PureBasic editor support for VS Code, developed from a clean-start scaffold in t
 
 ## Current Status
 
-The project now has a working Phase 2 baseline.
+The project now has a working Phase 4 baseline.
 
 This repo already contains:
 
@@ -51,6 +52,7 @@ This repo already contains:
 - a phased product plan in `development_plan.md`
 - baseline GitHub Actions workflows for CI and tagged releases
 - donor-based syntax highlighting and a stronger snippet pack for PureBasic editing
+- offline docs and lightweight diagnostics grounded in the local PureBasic corpus
 
 The extension product path is now being built at the repo root.
 
@@ -90,10 +92,17 @@ Current docs behavior:
 - full local docs open from the command palette or from hover links
 - docs are served from the packaged `purebasic_help` corpus, so they work offline
 
+Current diagnostics behavior:
+
+- warns when `EnableExplicit` is missing
+- hints when console APIs are detected, including the IDE path to `Executable Format = Console`
+- suggests `XIncludeFile` when shared `.pbi` includes still use `IncludeFile`
+- can be tuned through `purebasic.diagnostics.*` settings
+
 ## Planned Next Layers
 
-- offline documentation lookup
-- lightweight PureBasic-aware diagnostics
+- document symbols and outline support
+- lightweight local definitions for procedures and modules
 - packaging, CI, tags, and GitHub Releases
 
 ## Development Workflow
@@ -136,11 +145,11 @@ npm run package:vsix
 
 Current packaged artifact:
 
-- `purebasic-toolkit-0.3.0.vsix`
+- `purebasic-toolkit-0.4.0.vsix`
 
 Current release prep notes:
 
-- `docs/releases/v0.3.0.md`
+- `docs/releases/v0.4.0.md`
 
 ## GitHub Release Flow
 
@@ -149,7 +158,7 @@ Recommended release flow:
 1. merge the release PR into `main`
 2. open GitHub Actions
 3. run the `Release` workflow manually on `main`
-4. enter the version, for example `0.3.0`
+4. enter the version, for example `0.4.0`
 
 What the manual release workflow does:
 

@@ -258,6 +258,15 @@ Turn repo knowledge and PureBasic pitfalls into helpful editor guidance.
 - diagnostics provide real signal without spamming users
 - the extension starts to reflect PureBasic-specific expertise, not just generic editor behavior
 
+### Phase 4 Baseline Shipped
+
+Version `0.4.0` establishes the first diagnostics slice with:
+
+- `EnableExplicit` guidance
+- console executable format hints for IDE-driven book examples
+- `IncludeFile` to `XIncludeFile` suggestions
+- user settings to keep diagnostics lightweight and adjustable
+
 ## Phase 5 - Release Hardening and Distribution
 
 ### Objective
