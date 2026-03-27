@@ -1,9 +1,9 @@
 {
   "name": "purebasic-toolkit",
   "displayName": "PureBasic Toolkit",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "publisher": "worajedt",
-  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, diagnostics, and check/compile/run commands.",
+  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, diagnostics, lightweight navigation, and check/compile/run commands.",
   "license": "MIT",
   "icon": "media/icon.png",
   "galleryBanner": {
@@ -32,7 +32,8 @@
     "compiler",
     "language-support",
     "offline-docs",
-    "diagnostics"
+    "diagnostics",
+    "code-navigation"
   ],
   "engines": {
     "vscode": "^1.90.0"
