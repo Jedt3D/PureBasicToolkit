@@ -267,6 +267,38 @@ Version `0.4.0` establishes the first diagnostics slice with:
 - `IncludeFile` to `XIncludeFile` suggestions
 - user settings to keep diagnostics lightweight and adjustable
 
+## Phase 5 - Navigation and Local Definitions
+
+### Objective
+
+Complete the lightweight navigation slice with local structure awareness before committing to a full LSP.
+
+### Features
+
+- document symbols and outline support
+- local definitions for procedures and modules
+- include-aware local file lookup
+
+### Feature Notes
+
+- stay local-first and lightweight
+- prefer current file and include-linked files before workspace-wide fallback
+- keep symbol coverage broad but safe
+
+### Exit Criteria
+
+- Outline is useful on real PureBasic files
+- Go to Definition works for common local procedure and module cases
+- navigation stays fast without requiring a full parser server
+
+### Phase 5 Baseline Shipped
+
+Version `0.5.0` establishes the first lightweight navigation slice with:
+
+- Outline/document symbols for core PureBasic declarations
+- local procedure and module definition lookup
+- include-aware file search before workspace fallback
+
 ## Phase 5 - Release Hardening and Distribution
 
 ### Objective

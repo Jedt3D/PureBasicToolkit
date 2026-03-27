@@ -6,6 +6,26 @@ The format is based on Keep a Changelog and the project follows Semantic Version
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-03-27
+
+### Added
+
+- Outline/document symbol support for:
+  - procedures
+  - modules and declare modules
+  - structures
+  - enumerations
+  - interfaces
+  - macros
+- lightweight Go to Definition support for local procedures and modules
+- include-aware definition lookup that checks local `XIncludeFile` and `IncludeFile` targets before workspace fallback
+
+### Changed
+
+- bumped the extension to its first Phase 5 navigation baseline
+- expanded Marketplace metadata to reflect lightweight code navigation support
+- updated the README and release docs for the new navigation workflow
+
 ## [0.4.0] - 2026-03-27
 
 ### Added
