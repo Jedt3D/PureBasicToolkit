@@ -4,15 +4,18 @@
 
 PureBasic editor support for VS Code, developed from a clean-start scaffold in this repository and grounded in the official PureBasic help and example corpus.
 
-## What Ships in 0.2.1
+## What Ships in 0.3.0
 
 - PureBasic file recognition for `.pb`, `.pbi`, and `.pbp`
 - donor-based syntax highlighting tuned against real PureBasic sources
 - curated snippets and starter templates for console and window applications
+- hover docs for recognized PureBasic commands and topics
+- `PureBasic: Open Documentation for Symbol`
 - `PureBasic: Check Syntax Current File`
 - `PureBasic: Compile Current File`
 - `PureBasic: Run Current File`
 - repo-owned scripts for reliable local PureBasic compile and run workflows
+- packaged offline PureBasic help pages for local documentation lookup
 
 ## Preview
 
@@ -31,6 +34,7 @@ PureBasic editor support for VS Code, developed from a clean-start scaffold in t
 1. Install the packaged `.vsix` or run the extension in an Extension Development Host.
 2. Open a `.pb`, `.pbi`, or `.pbp` file.
 3. Use the Command Palette and run:
+   - `PureBasic: Open Documentation for Symbol`
    - `PureBasic: Check Syntax Current File`
    - `PureBasic: Compile Current File`
    - `PureBasic: Run Current File`
@@ -74,10 +78,17 @@ That means Phase 2 commands work best when the current file lives inside this re
 
 Current command behavior:
 
+- `Open Documentation for Symbol` opens the packaged local PureBasic help page for the symbol under the cursor
 - `Check Syntax` works on `.pb` and `.pbi`
 - `Compile` currently requires an active `.pb` file
 - `Run` currently requires an active `.pb` file
 - build and run requests are intentionally serialized so `pbcompiler` does not collide with another in-flight task
+
+Current docs behavior:
+
+- hover docs appear for recognized PureBasic commands, keywords, and indexed help topics
+- full local docs open from the command palette or from hover links
+- docs are served from the packaged `purebasic_help` corpus, so they work offline
 
 ## Planned Next Layers
 
@@ -125,11 +136,11 @@ npm run package:vsix
 
 Current packaged artifact:
 
-- `purebasic-toolkit-0.2.1.vsix`
+- `purebasic-toolkit-0.3.0.vsix`
 
 Current release prep notes:
 
-- `docs/releases/v0.2.1.md`
+- `docs/releases/v0.3.0.md`
 
 ## Source Material
 

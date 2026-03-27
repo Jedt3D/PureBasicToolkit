@@ -6,6 +6,20 @@ The format is based on Keep a Changelog and the project follows Semantic Version
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-03-27
+
+### Added
+
+- `PureBasic: Open Documentation for Symbol`
+- hover docs for recognized PureBasic commands and indexed help topics
+- packaged offline `purebasic_help` pages so local documentation works without network access
+
+### Changed
+
+- bumped the extension to its first Phase 3 slice
+- expanded the extension package to include the local PureBasic help corpus
+- updated the README for the new offline docs workflow
+
 ## [0.2.1] - 2026-03-27
 
 ### Added

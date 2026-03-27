@@ -1,9 +1,9 @@
 {
   "name": "purebasic-toolkit",
   "displayName": "PureBasic Toolkit",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "publisher": "worajedt",
-  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, and check/compile/run commands.",
+  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, and check/compile/run commands.",
   "license": "MIT",
   "icon": "media/icon.png",
   "galleryBanner": {
@@ -39,7 +39,8 @@
     "onLanguage:purebasic",
     "onCommand:purebasic.checkSyntax",
     "onCommand:purebasic.compile",
-    "onCommand:purebasic.run"
+    "onCommand:purebasic.run",
+    "onCommand:purebasic.openDocsForSymbol"
   ],
   "scripts": {
     "build": "tsc -p .",
@@ -100,6 +101,12 @@
         "title": "Run Current File",
         "category": "PureBasic",
         "icon": "$(play)"
+      },
+      {
+        "command": "purebasic.openDocsForSymbol",
+        "title": "Open Documentation for Symbol",
+        "category": "PureBasic",
+        "icon": "$(book)"
       }
     ],
     "menus": {
@@ -114,6 +121,10 @@
         },
         {
           "command": "purebasic.run",
+          "when": "editorLangId == purebasic"
+        },
+        {
+          "command": "purebasic.openDocsForSymbol",
           "when": "editorLangId == purebasic"
         }
       ]

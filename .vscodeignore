@@ -13,7 +13,7 @@ fileio.pb
 intermediate_3d_game_engine_sources/**
 intermediate_sources/**
 Makefile
-purebasic_help/**
+docs/**
 reference_3d_game_engine/**
 reference_sources/**
 scripts/**

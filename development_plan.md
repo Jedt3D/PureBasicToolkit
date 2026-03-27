@@ -1,6 +1,6 @@
 # PureBasic Toolkit Development Plan
 
-Current shipped baseline: `0.2.1` with Phase 2 command support, grammar, snippets, branding assets, packaging, and GitHub workflow scaffolding.
+Current shipped baseline: `0.3.0` with initial Phase 3 offline docs lookup, hover docs, Phase 2 command support, branding assets, packaging, and GitHub workflow scaffolding.
 
 ## Goal
 
