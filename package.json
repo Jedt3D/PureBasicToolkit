@@ -1,9 +1,9 @@
 {
   "name": "purebasic-toolkit",
   "displayName": "PureBasic Toolkit",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "publisher": "worajedt",
-  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, project-aware diagnostics, symbol-aware warnings, lightweight navigation, and check/compile/run commands.",
+  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, project-aware diagnostics, symbol-aware warnings, workspace symbol search, lightweight navigation, and check/compile/run commands.",
   "license": "MIT",
   "icon": "media/icon.png",
   "galleryBanner": {
@@ -35,7 +35,8 @@
     "diagnostics",
     "code-navigation",
     "project-awareness",
-    "typo-detection"
+    "typo-detection",
+    "workspace-symbols"
   ],
   "engines": {
     "vscode": "^1.90.0"
@@ -43,6 +44,8 @@
   "main": "./dist/extension.js",
   "activationEvents": [
     "onLanguage:purebasic",
+    "workspaceContains:**/*.pb",
+    "workspaceContains:**/*.pbi",
     "onCommand:purebasic.checkSyntax",
     "onCommand:purebasic.compile",
     "onCommand:purebasic.run",

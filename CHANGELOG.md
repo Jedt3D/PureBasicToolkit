@@ -6,6 +6,20 @@ The format is based on Keep a Changelog and the project follows Semantic Version
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-03-27
+
+### Added
+
+- workspace symbol search for PureBasic procedures, modules, declarations, structures, enumerations, macros, and interfaces
+- broader workspace-aware Go to Definition fallback after local and include-linked lookup
+- activation on PureBasic workspace discovery so symbol search is available earlier in the session
+
+### Changed
+
+- bumped the extension to its first Phase 8 workspace-symbol baseline
+- expanded Marketplace metadata to reflect workspace symbol search support
+- updated the README and release docs for the broader navigation workflow
+
 ## [0.7.0] - 2026-03-27
 
 ### Added

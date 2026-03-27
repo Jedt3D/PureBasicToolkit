@@ -367,7 +367,39 @@ Version `0.7.0` establishes the first symbol-awareness slice with:
 - built-in typo suggestions when confidence is high
 - shared help-symbol loading for diagnostics
 
-## Phase 8 - Optional Advanced Track
+## Phase 8 - Workspace Symbols and Broader Lookup
+
+### Objective
+
+Extend the lightweight navigation layer across the wider workspace without committing to a full LSP server.
+
+### Features
+
+- workspace symbol search for core PureBasic declarations
+- broader workspace-aware Go to Definition fallback
+- earlier activation when a workspace contains PureBasic files
+
+### Feature Notes
+
+- keep the search flow lightweight and string-based
+- prefer current-file and include-linked lookup before workspace-wide fallback
+- cap workspace scanning so navigation stays responsive in large corpora
+
+### Exit Criteria
+
+- workspace symbol search returns useful PureBasic results across the current project
+- Go to Definition still prefers local accuracy but succeeds more often across larger workspaces
+- the feature stays lightweight and does not require a dedicated parser server
+
+### Phase 8 Baseline Shipped
+
+Version `0.8.0` establishes the first workspace-symbol slice with:
+
+- workspace symbol search for core PureBasic declarations
+- broader workspace-aware Go to Definition fallback
+- activation when the workspace already contains PureBasic files
+
+## Phase 9 - Optional Advanced Track
 
 ### Objective
 
@@ -403,6 +435,8 @@ Suggested milestone versions:
   - project-aware diagnostics and shared workspace lookup
 - `0.7.0`
   - symbol-aware diagnostics and built-in typo suggestions
+- `0.8.0`
+  - workspace symbol search and broader workspace fallback for navigation
 - `1.0.0`
   - stable, documented, releasable extension with strong end-to-end workflow
 

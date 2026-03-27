@@ -4,7 +4,7 @@
 
 PureBasic editor support for VS Code, developed from a clean-start scaffold in this repository and grounded in the official PureBasic help and example corpus.
 
-## What Ships in 0.7.0
+## What Ships in 0.8.0
 
 - PureBasic file recognition for `.pb`, `.pbi`, and `.pbp`
 - donor-based syntax highlighting tuned against real PureBasic sources
@@ -15,6 +15,8 @@ PureBasic editor support for VS Code, developed from a clean-start scaffold in t
 - lightweight Go to Definition support for local procedures, modules, and include-linked files
 - project-aware diagnostics for missing include files, unresolved `UseModule`, and unresolved `Module::Symbol` lookups
 - symbol-aware diagnostics for unresolved local procedure calls, including typo suggestions for likely built-in commands
+- workspace symbol search for procedures, modules, declarations, structures, macros, and interfaces
+- broader workspace-aware Go to Definition fallback when local/include-linked lookup is not enough
 - `PureBasic: Open Documentation for Symbol`
 - `PureBasic: Check Syntax Current File`
 - `PureBasic: Compile Current File`
@@ -46,7 +48,7 @@ PureBasic editor support for VS Code, developed from a clean-start scaffold in t
 
 ## Current Status
 
-The project now has a working Phase 7 baseline.
+The project now has a working Phase 8 baseline.
 
 This repo already contains:
 
@@ -60,6 +62,7 @@ This repo already contains:
 - lightweight navigation support for local code structure and definitions
 - project-aware diagnostics that check include and module wiring instead of only single-file style rules
 - symbol-aware warnings that catch likely invented APIs and misspelled built-in calls
+- workspace symbol search and broader workspace fallback for navigation
 
 The extension product path is now being built at the repo root.
 
@@ -115,6 +118,8 @@ Current navigation behavior:
 - Outline shows procedures, modules, declare modules, structures, enumerations, interfaces, and macros
 - Go to Definition resolves local procedures and modules in the active file
 - local include files referenced by `XIncludeFile` and `IncludeFile` are searched before wider workspace fallback
+- workspace symbol search surfaces matching PureBasic declarations across the current workspace
+- when local/include-linked lookup misses, Go to Definition falls back to a wider workspace scan
 - the navigation layer is intentionally lightweight and local-first, not a full LSP parser
 
 ## Planned Next Layers
@@ -164,11 +169,11 @@ npm run package:vsix
 
 Current packaged artifact:
 
-- `purebasic-toolkit-0.7.0.vsix`
+- `purebasic-toolkit-0.8.0.vsix`
 
 Current release prep notes:
 
-- `docs/releases/v0.7.0.md`
+- `docs/releases/v0.8.0.md`
 
 ## GitHub Release Flow
 
@@ -177,7 +182,7 @@ Recommended release flow:
 1. merge the release PR into `main`
 2. open GitHub Actions
 3. run the `Release` workflow manually on `main`
-4. enter the version, for example `0.7.0`
+4. enter the version, for example `0.8.0`
 
 What the manual release workflow does:
 

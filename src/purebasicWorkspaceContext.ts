@@ -29,11 +29,7 @@ export async function collectCandidateUris(
   }
 
   if (workspaceFolder) {
-    const files = await vscode.workspace.findFiles(
-      new vscode.RelativePattern(workspaceFolder, "**/*.{pb,pbi}"),
-      "**/node_modules/**",
-      workspaceLimit,
-    );
+    const files = await collectWorkspacePureBasicUris(workspaceLimit, workspaceFolder);
 
     for (const uri of files) {
       if (!discovered.has(uri.fsPath)) {
@@ -43,6 +39,34 @@ export async function collectCandidateUris(
   }
 
   return [document.uri, ...Array.from(discovered.values()).filter((uri) => uri.fsPath !== document.uri.fsPath)];
+}
+
+export async function collectWorkspacePureBasicUris(
+  workspaceLimit = 400,
+  workspaceFolder?: vscode.WorkspaceFolder,
+): Promise<vscode.Uri[]> {
+  const discovered = new Map<string, vscode.Uri>();
+  const folders = workspaceFolder ? [workspaceFolder] : (vscode.workspace.workspaceFolders ?? []);
+
+  for (const folder of folders) {
+    if (discovered.size >= workspaceLimit) {
+      break;
+    }
+
+    const files = await vscode.workspace.findFiles(
+      new vscode.RelativePattern(folder, "**/*.{pb,pbi}"),
+      DEFAULT_EXCLUDE_GLOB,
+      workspaceLimit - discovered.size,
+    );
+
+    for (const uri of files) {
+      if (!discovered.has(uri.fsPath)) {
+        discovered.set(uri.fsPath, uri);
+      }
+    }
+  }
+
+  return Array.from(discovered.values());
 }
 
 export function resolveIncludeFsPath(baseFilePath: string, includePath: string): string {
@@ -57,3 +81,5 @@ export function resolveIncludeUri(baseUri: vscode.Uri, includePath: string): vsc
 
   return vscode.Uri.file(resolved);
 }
+
+const DEFAULT_EXCLUDE_GLOB = "**/{node_modules,.git}/**";

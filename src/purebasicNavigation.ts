@@ -4,11 +4,14 @@ import {
   getLookupQuery,
   parsePureBasicNavigation,
   type PureBasicDefinitionEntry,
-  type PureBasicNavigationParseResult,
   type PureBasicNavigationSymbol,
   type PureBasicNavigationSymbolKind,
 } from "./purebasicNavigationEngine";
-import { collectCandidateUris as collectWorkspaceCandidateUris } from "./purebasicWorkspaceContext";
+import {
+  collectCandidateUris as collectWorkspaceCandidateUris,
+  collectWorkspacePureBasicUris,
+} from "./purebasicWorkspaceContext";
+import { normalizeWorkspaceSymbolQuery, scoreWorkspaceDefinition } from "./purebasicWorkspaceSymbols";
 
 export class PureBasicNavigationController implements vscode.Disposable {
   private readonly output: vscode.OutputChannel;
@@ -24,6 +27,9 @@ export class PureBasicNavigationController implements vscode.Disposable {
       }),
       vscode.languages.registerDefinitionProvider({ language: "purebasic" }, {
         provideDefinition: (document, position) => this.provideDefinition(document, position),
+      }),
+      vscode.languages.registerWorkspaceSymbolProvider({
+        provideWorkspaceSymbols: (query) => this.provideWorkspaceSymbols(query),
       }),
       this,
     );
@@ -45,8 +51,25 @@ export class PureBasicNavigationController implements vscode.Disposable {
       return undefined;
     }
 
+    const searched = new Set<string>();
+
     const candidateUris = await collectCandidateUris(document);
     for (const uri of candidateUris) {
+      searched.add(uri.fsPath);
+      const candidate = await vscode.workspace.openTextDocument(uri);
+      const parsed = parsePureBasicNavigation(candidate.getText());
+      const match = findBestDefinitionMatch(parsed.definitions, query);
+      if (match) {
+        return createLocation(candidate.uri, match);
+      }
+    }
+
+    const workspaceUris = await collectWorkspacePureBasicUris(500);
+    for (const uri of workspaceUris) {
+      if (searched.has(uri.fsPath)) {
+        continue;
+      }
+
       const candidate = await vscode.workspace.openTextDocument(uri);
       const parsed = parsePureBasicNavigation(candidate.getText());
       const match = findBestDefinitionMatch(parsed.definitions, query);
@@ -56,6 +79,33 @@ export class PureBasicNavigationController implements vscode.Disposable {
     }
 
     return undefined;
+  }
+
+  private async provideWorkspaceSymbols(query: string): Promise<vscode.SymbolInformation[]> {
+    const normalizedQuery = normalizeWorkspaceSymbolQuery(query);
+    if (!normalizedQuery) {
+      return [];
+    }
+
+    const uris = await collectWorkspacePureBasicUris(500);
+    const matches: WorkspaceSymbolMatch[] = [];
+
+    for (const uri of uris) {
+      const document = await vscode.workspace.openTextDocument(uri);
+      const parsed = parsePureBasicNavigation(document.getText());
+
+      for (const definition of parsed.definitions) {
+        const score = scoreWorkspaceDefinition(definition, normalizedQuery);
+        if (score === 0) {
+          continue;
+        }
+
+        matches.push({ uri, definition, score });
+      }
+    }
+
+    matches.sort(compareWorkspaceSymbolMatches);
+    return matches.slice(0, 100).map((match) => createWorkspaceSymbol(match));
   }
 }
 
@@ -100,6 +150,17 @@ function toDocumentSymbol(document: vscode.TextDocument, symbol: PureBasicNaviga
   return documentSymbol;
 }
 
+function createWorkspaceSymbol(match: WorkspaceSymbolMatch): vscode.SymbolInformation {
+  const location = createLocation(match.uri, match.definition);
+  const containerName = match.definition.moduleName ?? pathBasenameWithoutExtension(match.uri);
+  return new vscode.SymbolInformation(
+    match.definition.name,
+    toSymbolKind(match.definition.kind),
+    containerName,
+    location,
+  );
+}
+
 function toSymbolKind(kind: PureBasicNavigationSymbolKind): vscode.SymbolKind {
   switch (kind) {
     case "module":
@@ -123,4 +184,31 @@ function toSymbolKind(kind: PureBasicNavigationSymbolKind): vscode.SymbolKind {
 
 function clampLine(line: number, lineCount: number): number {
   return Math.max(0, Math.min(line, Math.max(lineCount - 1, 0)));
+}
+
+function compareWorkspaceSymbolMatches(left: WorkspaceSymbolMatch, right: WorkspaceSymbolMatch): number {
+  if (left.score !== right.score) {
+    return right.score - left.score;
+  }
+
+  const leftQualified = `${left.definition.moduleName ?? ""}::${left.definition.name}`.toLowerCase();
+  const rightQualified = `${right.definition.moduleName ?? ""}::${right.definition.name}`.toLowerCase();
+  const byName = leftQualified.localeCompare(rightQualified);
+  if (byName !== 0) {
+    return byName;
+  }
+
+  return left.uri.fsPath.localeCompare(right.uri.fsPath);
+}
+
+function pathBasenameWithoutExtension(uri: vscode.Uri): string {
+  const segments = uri.path.split("/");
+  const fileName = segments[segments.length - 1] ?? uri.fsPath;
+  return fileName.replace(/\.[^.]+$/, "");
+}
+
+interface WorkspaceSymbolMatch {
+  uri: vscode.Uri;
+  definition: PureBasicDefinitionEntry;
+  score: number;
 }
