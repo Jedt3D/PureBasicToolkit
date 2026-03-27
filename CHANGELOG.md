@@ -17,6 +17,8 @@ The format is based on Keep a Changelog and the project follows Semantic Version
 - renamed the extension from `PureBasic Extension` to `PureBasic Toolkit`
 - added packaged branding support through `media/icon.png` and the README banner
 - polished the Marketplace-facing README ordering and release copy around the new product name
+- aligned extension metadata with the MIT license already present in the repository
+- updated repository metadata to point at the `Jedt3D/PureBasicToolkit` GitHub repository
 - updated the packaged `.vsix` artifact name and related metadata to match the new product name
 
 ## [0.2.0] - 2026-03-27

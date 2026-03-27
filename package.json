@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "publisher": "worajedt",
   "description": "PureBasic language support for VS Code with syntax highlighting, snippets, and check/compile/run commands.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "icon": "media/icon.png",
   "galleryBanner": {
     "color": "#111b29",
@@ -12,11 +12,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jedt3D/PureBasicExtension.git"
+    "url": "https://github.com/Jedt3D/PureBasicToolkit.git"
   },
-  "homepage": "https://github.com/Jedt3D/PureBasicExtension",
+  "homepage": "https://github.com/Jedt3D/PureBasicToolkit",
   "bugs": {
-    "url": "https://github.com/Jedt3D/PureBasicExtension/issues"
+    "url": "https://github.com/Jedt3D/PureBasicToolkit/issues"
   },
   "categories": [
     "Programming Languages",
