@@ -3,14 +3,17 @@ import * as vscode from "vscode";
 import { analyzePureBasicSource, type PureBasicDiagnosticRuleOptions, type PureBasicDiagnosticFinding } from "./purebasicDiagnosticsEngine";
 import { analyzePureBasicProjectContext, type PureBasicProjectDiagnosticRuleOptions } from "./purebasicProjectDiagnostics";
 import { collectCandidateUris } from "./purebasicWorkspaceContext";
+import { loadPureBasicKnownSymbols } from "./purebasicHelpIndex";
 
 export class PureBasicDiagnosticsController implements vscode.Disposable {
   private readonly output: vscode.OutputChannel;
   private readonly collection: vscode.DiagnosticCollection;
+  private readonly knownBuiltinSymbols: string[];
 
-  public constructor(output: vscode.OutputChannel) {
+  public constructor(extensionPath: string, output: vscode.OutputChannel) {
     this.output = output;
     this.collection = vscode.languages.createDiagnosticCollection("purebasic");
+    this.knownBuiltinSymbols = loadPureBasicKnownSymbols(extensionPath);
   }
 
   public register(context: vscode.ExtensionContext): void {
@@ -75,6 +78,7 @@ export class PureBasicDiagnosticsController implements vscode.Disposable {
       missingIncludeFile: config.get<boolean>("diagnostics.missingIncludeFile", true),
       unresolvedUseModule: config.get<boolean>("diagnostics.unresolvedUseModule", true),
       unresolvedQualifiedSymbol: config.get<boolean>("diagnostics.unresolvedQualifiedSymbol", true),
+      unresolvedProcedureCall: config.get<boolean>("diagnostics.unresolvedProcedureCall", true),
     };
   }
 
@@ -83,7 +87,7 @@ export class PureBasicDiagnosticsController implements vscode.Disposable {
     config: vscode.WorkspaceConfiguration,
   ): Promise<PureBasicDiagnosticFinding[]> {
     const options = this.getProjectRuleOptions(config);
-    if (!options.missingIncludeFile && !options.unresolvedUseModule && !options.unresolvedQualifiedSymbol) {
+    if (!options.missingIncludeFile && !options.unresolvedUseModule && !options.unresolvedQualifiedSymbol && !options.unresolvedProcedureCall) {
       return [];
     }
 
@@ -105,6 +109,7 @@ export class PureBasicDiagnosticsController implements vscode.Disposable {
       },
       relatedSources,
       options,
+      this.knownBuiltinSymbols,
     );
   }
 

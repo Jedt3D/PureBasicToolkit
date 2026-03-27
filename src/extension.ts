@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext): void {
   output.appendLine("PureBasic Toolkit activated.");
   const commands = new PureBasicCommandController(output);
   const docs = new PureBasicDocsController(context.extensionPath, output);
-  const diagnostics = new PureBasicDiagnosticsController(output);
+  const diagnostics = new PureBasicDiagnosticsController(context.extensionPath, output);
   const navigation = new PureBasicNavigationController(output);
 
   context.subscriptions.push(output);

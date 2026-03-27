@@ -1,9 +1,9 @@
 {
   "name": "purebasic-toolkit",
   "displayName": "PureBasic Toolkit",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "publisher": "worajedt",
-  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, project-aware diagnostics, lightweight navigation, and check/compile/run commands.",
+  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, project-aware diagnostics, symbol-aware warnings, lightweight navigation, and check/compile/run commands.",
   "license": "MIT",
   "icon": "media/icon.png",
   "galleryBanner": {
@@ -34,7 +34,8 @@
     "offline-docs",
     "diagnostics",
     "code-navigation",
-    "project-awareness"
+    "project-awareness",
+    "typo-detection"
   ],
   "engines": {
     "vscode": "^1.90.0"
@@ -171,6 +172,11 @@
           "type": "boolean",
           "default": true,
           "description": "Warn when Module::Symbol lookups cannot be resolved in the current file, linked includes, or workspace scan."
+        },
+        "purebasic.diagnostics.unresolvedProcedureCall": {
+          "type": "boolean",
+          "default": true,
+          "description": "Warn when unqualified procedure calls cannot be resolved locally and suggest likely built-in PureBasic typos when possible."
         }
       }
     }

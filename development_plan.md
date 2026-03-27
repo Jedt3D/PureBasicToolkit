@@ -335,7 +335,39 @@ Version `0.6.0` establishes the first project-aware diagnostics slice with:
 - unresolved `Module::Symbol` warnings
 - shared include/workspace discovery used by navigation and diagnostics
 
-## Phase 7 - Optional Advanced Track
+## Phase 7 - Symbol Awareness and Naming Traps
+
+### Objective
+
+Catch likely invented APIs and misspelled built-in calls without requiring a full semantic engine.
+
+### Features
+
+- unresolved local procedure call diagnostics
+- typo suggestions for likely built-in PureBasic commands
+- shared help-symbol loading for diagnostics
+
+### Feature Notes
+
+- do not warn on known PureBasic built-ins
+- do not warn on locally defined procedures
+- only surface suggestions when the confidence is reasonably high
+
+### Exit Criteria
+
+- local unresolved calls surface as useful warnings
+- typo suggestions help with common misspellings like `OpenConsol()`
+- the warning layer still stays lightweight and low-noise
+
+### Phase 7 Baseline Shipped
+
+Version `0.7.0` establishes the first symbol-awareness slice with:
+
+- unresolved local procedure call warnings
+- built-in typo suggestions when confidence is high
+- shared help-symbol loading for diagnostics
+
+## Phase 8 - Optional Advanced Track
 
 ### Objective
 
@@ -369,6 +401,8 @@ Suggested milestone versions:
   - lightweight navigation and local definitions
 - `0.6.0`
   - project-aware diagnostics and shared workspace lookup
+- `0.7.0`
+  - symbol-aware diagnostics and built-in typo suggestions
 - `1.0.0`
   - stable, documented, releasable extension with strong end-to-end workflow
 

@@ -6,6 +6,20 @@ The format is based on Keep a Changelog and the project follows Semantic Version
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-03-27
+
+### Added
+
+- symbol-aware diagnostics for unresolved local procedure calls
+- typo suggestions for likely built-in PureBasic commands when unresolved calls are close to a known help symbol
+- shared help-symbol loading so diagnostics can distinguish between built-ins and likely invented APIs
+
+### Changed
+
+- bumped the extension to its first Phase 7 symbol-awareness baseline
+- expanded Marketplace metadata to reflect symbol-aware diagnostics support
+- updated the README and release docs for the new unresolved-call workflow
+
 ## [0.6.0] - 2026-03-27
 
 ### Added
