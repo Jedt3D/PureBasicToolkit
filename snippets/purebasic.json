@@ -1,0 +1,475 @@
+{
+  "PureBasic File": {
+    "prefix": "pbfile",
+    "body": [
+      "; PureBasic Example: ${1:Description}",
+      "",
+      "EnableExplicit",
+      "",
+      "Procedure Main()",
+      "  ${0}",
+      "EndProcedure",
+      "",
+      "Main()"
+    ],
+    "description": "Create a PureBasic file with EnableExplicit and Main()"
+  },
+  "Console Application File": {
+    "prefix": "pbconsole",
+    "body": [
+      "; PureBasic Example: Console Application",
+      "",
+      "EnableExplicit",
+      "",
+      "Procedure Main()",
+      "  If OpenConsole()",
+      "    ${0}",
+      "    PrintN(\"Press Enter to exit...\")",
+      "    Input()",
+      "    CloseConsole()",
+      "  EndIf",
+      "EndProcedure",
+      "",
+      "Main()"
+    ],
+    "description": "Create a console-oriented PureBasic file"
+  },
+  "Window Application File": {
+    "prefix": "pbwindow",
+    "body": [
+      "; PureBasic Example: Window Application",
+      "",
+      "EnableExplicit",
+      "",
+      "Enumeration",
+      "  #Window_Main",
+      "  #Button_OK",
+      "EndEnumeration",
+      "",
+      "Procedure Main()",
+      "  Protected event.i",
+      "",
+      "  If OpenWindow(#Window_Main, 0, 0, ${1:800}, ${2:600}, \"${3:PureBasic App}\", #PB_Window_SystemMenu | #PB_Window_ScreenCentered)",
+      "    ButtonGadget(#Button_OK, 16, 16, 120, 32, \"${4:OK}\")",
+      "",
+      "    Repeat",
+      "      event = WaitWindowEvent()",
+      "      Select event",
+      "        Case #PB_Event_Gadget",
+      "          Select EventGadget()",
+      "            Case #Button_OK",
+      "              ${0}",
+      "          EndSelect",
+      "        Case #PB_Event_CloseWindow",
+      "          Break",
+      "      EndSelect",
+      "    ForEver",
+      "  EndIf",
+      "EndProcedure",
+      "",
+      "Main()"
+    ],
+    "description": "Create a basic GUI application with named gadget IDs"
+  },
+  "Procedure": {
+    "prefix": "proc",
+    "body": [
+      "Procedure ${1:ProcedureName}(${2:value.i})",
+      "  ${0}",
+      "EndProcedure"
+    ],
+    "description": "Define a basic procedure"
+  },
+  "Procedure with Return Type": {
+    "prefix": "procret",
+    "body": [
+      "Procedure.${1|i,s,f,d,l,q,b,w|} ${2:FunctionName}(${3:value.i})",
+      "  Protected result.$1",
+      "  ${0}",
+      "  ProcedureReturn result",
+      "EndProcedure"
+    ],
+    "description": "Define a typed procedure with an explicit return value"
+  },
+  "Procedure with Multiple Parameters": {
+    "prefix": "procmulti",
+    "body": [
+      "Procedure ${1:ProcedureName}(${2:param1.i}, ${3:param2.s}, ${4:param3.f})",
+      "  ${0}",
+      "EndProcedure"
+    ],
+    "description": "Define a procedure with multiple typed parameters"
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": [
+      "If ${1:condition}",
+      "  ${0}",
+      "EndIf"
+    ],
+    "description": "Insert an If block"
+  },
+  "If-Else Statement": {
+    "prefix": "ifelse",
+    "body": [
+      "If ${1:condition}",
+      "  ${2}",
+      "Else",
+      "  ${0}",
+      "EndIf"
+    ],
+    "description": "Insert an If-Else block"
+  },
+  "If-ElseIf-Else Statement": {
+    "prefix": "ifelseif",
+    "body": [
+      "If ${1:condition1}",
+      "  ${2}",
+      "ElseIf ${3:condition2}",
+      "  ${4}",
+      "Else",
+      "  ${0}",
+      "EndIf"
+    ],
+    "description": "Insert an If-ElseIf-Else block"
+  },
+  "Select-Case Statement": {
+    "prefix": "select",
+    "body": [
+      "Select ${1:expression}",
+      "  Case ${2:value1}",
+      "    ${3}",
+      "  Case ${4:value2}",
+      "    ${5}",
+      "  Default",
+      "    ${0}",
+      "EndSelect"
+    ],
+    "description": "Insert a Select-Case block"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "For ${1:i} = ${2:0} To ${3:10}",
+      "  ${0}",
+      "Next ${1:i}"
+    ],
+    "description": "Insert a For loop"
+  },
+  "For Loop with Step": {
+    "prefix": "forstep",
+    "body": [
+      "For ${1:i} = ${2:0} To ${3:100} Step ${4:5}",
+      "  ${0}",
+      "Next ${1:i}"
+    ],
+    "description": "Insert a For loop with an explicit step"
+  },
+  "ForEach Loop": {
+    "prefix": "foreach",
+    "body": [
+      "ForEach ${1:items}()",
+      "  ${0}",
+      "Next"
+    ],
+    "description": "Iterate over a list or map"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "While ${1:condition}",
+      "  ${0}",
+      "Wend"
+    ],
+    "description": "Insert a While loop"
+  },
+  "Repeat-Until Loop": {
+    "prefix": "repeat",
+    "body": [
+      "Repeat",
+      "  ${0}",
+      "Until ${1:condition}"
+    ],
+    "description": "Insert a Repeat-Until loop"
+  },
+  "Structure Definition": {
+    "prefix": "struct",
+    "body": [
+      "Structure ${1:StructureName}",
+      "  ${2:field1}.${3|i,s,f,d,l,q,b,w|}",
+      "  ${0}",
+      "EndStructure"
+    ],
+    "description": "Define a structure"
+  },
+  "Structure with Extends": {
+    "prefix": "structext",
+    "body": [
+      "Structure ${1:ChildName} Extends ${2:ParentName}",
+      "  ${3:field1}.${4|i,s,f,d,l,q,b,w|}",
+      "  ${0}",
+      "EndStructure"
+    ],
+    "description": "Define a structure that extends another"
+  },
+  "Enumeration": {
+    "prefix": "enum",
+    "body": [
+      "Enumeration ${1:0}",
+      "  #${3:Value1}",
+      "  #${4:Value2}",
+      "  #${5:Value3}",
+      "EndEnumeration",
+      "${0}"
+    ],
+    "description": "Define an enumeration"
+  },
+  "Module Declaration and Definition": {
+    "prefix": "module",
+    "body": [
+      "DeclareModule ${1:ModuleName}",
+      "  Declare ${2:PublicProcedure}()",
+      "EndDeclareModule",
+      "",
+      "Module ${1:ModuleName}",
+      "  Procedure ${2:PublicProcedure}()",
+      "    ${0}",
+      "  EndProcedure",
+      "EndModule"
+    ],
+    "description": "Create a module declaration and implementation"
+  },
+  "DeclareModule Only": {
+    "prefix": "declmod",
+    "body": [
+      "DeclareModule ${1:ModuleName}",
+      "  Declare ${2:PublicProcedure}()",
+      "  ${0}",
+      "EndDeclareModule"
+    ],
+    "description": "Create a module interface block"
+  },
+  "Dim Array": {
+    "prefix": "array",
+    "body": [
+      "Dim ${1:items}.${2|i,s,f,d,l,q|}(${3:10})",
+      "${0}"
+    ],
+    "description": "Declare a typed array"
+  },
+  "Multi-Dimensional Array": {
+    "prefix": "array2d",
+    "body": [
+      "Dim ${1:grid}.${2|i,s,f,d,l,q|}(${3:10}, ${4:10})",
+      "${0}"
+    ],
+    "description": "Declare a two-dimensional typed array"
+  },
+  "NewList": {
+    "prefix": "newlist",
+    "body": [
+      "NewList ${1:items}.${2|i,s,f,d,l,q|}()",
+      "${0}"
+    ],
+    "description": "Create a linked list"
+  },
+  "NewMap": {
+    "prefix": "newmap",
+    "body": [
+      "NewMap ${1:lookup}.${2|s,i,f,d,l,q|}()",
+      "${0}"
+    ],
+    "description": "Create a map"
+  },
+  "File Write": {
+    "prefix": "filewrite",
+    "body": [
+      "Define file.i = CreateFile(#PB_Any, \"${1:output.txt}\")",
+      "If file",
+      "  WriteStringN(file, \"${2:text to write}\")",
+      "  CloseFile(file)",
+      "EndIf",
+      "${0}"
+    ],
+    "description": "Create and write a text file using #PB_Any"
+  },
+  "File Read": {
+    "prefix": "fileread",
+    "body": [
+      "Define file.i = ReadFile(#PB_Any, \"${1:input.txt}\")",
+      "If file",
+      "  While Eof(file) = 0",
+      "    Define line.s = ReadString(file)",
+      "    ${0}",
+      "  Wend",
+      "  CloseFile(file)",
+      "EndIf"
+    ],
+    "description": "Read a file line by line"
+  },
+  "File Open and Append": {
+    "prefix": "fileappend",
+    "body": [
+      "Define file.i = OpenFile(#PB_Any, \"${1:output.txt}\")",
+      "If file",
+      "  FileSeek(file, Lof(file))",
+      "  WriteStringN(file, \"${2:appended text}\")",
+      "  CloseFile(file)",
+      "EndIf",
+      "${0}"
+    ],
+    "description": "Open a file and append text"
+  },
+  "MessageRequester": {
+    "prefix": "msgbox",
+    "body": [
+      "MessageRequester(\"${1:Title}\", \"${2:Message}\")",
+      "${0}"
+    ],
+    "description": "Display a message requester"
+  },
+  "Debug Variable": {
+    "prefix": "debugvar",
+    "body": [
+      "Debug \"${1:variable} = \" + Str(${1:variable})",
+      "${0}"
+    ],
+    "description": "Print a variable value to the debugger"
+  },
+  "Define Variable": {
+    "prefix": "define",
+    "body": [
+      "Define ${1:value}.${2|i,s,f,d,l,q|} = ${3:0}",
+      "${0}"
+    ],
+    "description": "Define and initialize a local variable"
+  },
+  "Global Variable": {
+    "prefix": "global",
+    "body": [
+      "Global ${1:value}.${2|i,s,f,d,l,q|}",
+      "${0}"
+    ],
+    "description": "Declare a global variable"
+  },
+  "Protected Variable": {
+    "prefix": "protected",
+    "body": [
+      "Protected ${1:value}.${2|i,s,f,d,l,q|}",
+      "${0}"
+    ],
+    "description": "Declare a protected variable"
+  },
+  "Static Variable": {
+    "prefix": "static",
+    "body": [
+      "Static ${1:value}.${2|i,s,f,d,l,q|} = ${3:0}",
+      "${0}"
+    ],
+    "description": "Declare a static variable"
+  },
+  "Constant": {
+    "prefix": "const",
+    "body": [
+      "#${1:CONSTANT_NAME} = ${2:value}",
+      "${0}"
+    ],
+    "description": "Define a constant"
+  },
+  "Macro": {
+    "prefix": "macro",
+    "body": [
+      "Macro ${1:MacroName}(${2:param1})",
+      "  ${0}",
+      "EndMacro"
+    ],
+    "description": "Define a macro"
+  },
+  "XInclude File": {
+    "prefix": "xinclude",
+    "body": [
+      "XIncludeFile \"${1:path/to/file.pbi}\"",
+      "${0}"
+    ],
+    "description": "Include a file once using XIncludeFile"
+  },
+  "Compiler If": {
+    "prefix": "compilerif",
+    "body": [
+      "CompilerIf ${1:#PB_Compiler_OS = #PB_OS_Windows}",
+      "  ${2}",
+      "CompilerElse",
+      "  ${0}",
+      "CompilerEndIf"
+    ],
+    "description": "Insert a compiler conditional block"
+  },
+  "Compiler Select OS": {
+    "prefix": "compileros",
+    "body": [
+      "CompilerSelect #PB_Compiler_OS",
+      "  CompilerCase #PB_OS_Windows",
+      "    ${1}",
+      "  CompilerCase #PB_OS_MacOS",
+      "    ${2}",
+      "  CompilerCase #PB_OS_Linux",
+      "    ${0}",
+      "CompilerEndSelect"
+    ],
+    "description": "Insert a compiler block by operating system"
+  },
+  "Open Window": {
+    "prefix": "openwindow",
+    "body": [
+      "If OpenWindow(${1:#Window_Main}, 0, 0, ${2:800}, ${3:600}, \"${4:Window Title}\", #PB_Window_SystemMenu | #PB_Window_ScreenCentered)",
+      "  ${0}",
+      "EndIf"
+    ],
+    "description": "Open a centered window"
+  },
+  "Button Gadget": {
+    "prefix": "button",
+    "body": [
+      "ButtonGadget(${1:#Button_OK}, ${2:10}, ${3:10}, ${4:120}, ${5:32}, \"${6:OK}\")",
+      "${0}"
+    ],
+    "description": "Create a button gadget"
+  },
+  "String Gadget": {
+    "prefix": "stringgadget",
+    "body": [
+      "StringGadget(${1:#String_Input}, ${2:10}, ${3:10}, ${4:220}, ${5:24}, \"${6:default text}\")",
+      "${0}"
+    ],
+    "description": "Create a string gadget"
+  },
+  "Event Handler": {
+    "prefix": "eventhandler",
+    "body": [
+      "Repeat",
+      "  event = WaitWindowEvent()",
+      "  Select event",
+      "    Case #PB_Event_Gadget",
+      "      Select EventGadget()",
+      "        Case ${1:#Button_OK}",
+      "          ${0}",
+      "      EndSelect",
+      "    Case #PB_Event_CloseWindow",
+      "      Break",
+      "  EndSelect",
+      "ForEver"
+    ],
+    "description": "Insert a window event loop using an existing event variable"
+  },
+  "Threaded Procedure": {
+    "prefix": "thread",
+    "body": [
+      "Procedure ${1:ThreadProc}(*value)",
+      "  ${0}",
+      "EndProcedure",
+      "",
+      "Protected thread.i = CreateThread(@${1:ThreadProc}(), 0)"
+    ],
+    "description": "Create a procedure and start it in a thread"
+  }
+}

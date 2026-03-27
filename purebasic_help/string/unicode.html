@@ -1,0 +1,72 @@
+<html><head><title>Unicode</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">Unicode()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+*Buffer = <font color="#006666"><b>Unicode</b></font>(String$)</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Creates an Unicode representation of the string.  When the buffer is no longer needed, the buffer needs 
+to be freed with FreeMemory(). 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>String$</i></td>
+<td width="90%"> 
+The string to use. As PureBasic uses unicode as internal string format, there is no conversion occuring. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+The Unicode representation of the string. 
+
+</blockquote><p><b>Remarks</b></p><blockquote>
+
+This function is mainly useful when interacting with third-party libraries which requires a dynamic Unicode string as input. 
+<br>
+<br>
+The buffer includes a null-terminated character. 
+
+</blockquote><p><b>Example</b></p><blockquote>
+
+<pre><font face="Courier New, Courier, mono" size="2">  *Unicode =<font color="#006666"> Unicode</font>(&quot;Hélé&quot;)
+<font color="#006666">  ShowMemoryViewer</font>(*Unicode, 8)
+</font></pre>
+
+</blockquote><p><b>Example</b></p><blockquote>
+
+<pre><font face="Courier New, Courier, mono" size="2">  <b><font color="#006666">Macro</font></b> <font color="#006666">TUnicode</font>(Mem, Type = <font color="#924B72">#PB_Ascii</font>)
+<font color="#006666">    PeekS</font>(Mem, -1, Type)
+  <b><font color="#006666">EndMacro</font></b>
+
+  *Mem1 =<font color="#006666"> Ascii</font>(&quot;Test - éàîöÊÜ&quot;)
+  *Mem2 =<font color="#006666"> UTF8</font>(&quot;Test - éàîöÊÜ&quot;)
+  *Mem3 =<font color="#006666"> Unicode</font>(&quot;Test - éàîöÊÜ&quot;)
+  
+  <b><font color="#006666">Debug</font></b> <font color="#006666">TUnicode</font>(*Mem1)
+  <font color="#006666">;ShowMemoryViewer(*Mem1, StringByteLength(&quot;Test - éàîöÊÜ&quot;, #PB_Ascii))   ;54 65 73 74 20 2D 20 E9 E0 EE F6 CA DC           Test - éàîöÊÜ</font>
+
+  <b><font color="#006666">Debug</font></b> <font color="#006666">TUnicode</font>(*Mem2, <font color="#924B72">#PB_UTF8</font>)
+  <font color="#006666">;ShowMemoryViewer(*Mem2, StringByteLength(&quot;Test - éàîöÊÜ&quot;, #PB_UTF8))    ;54 65 73 74 20 2D 20 C3 A9 C3 A0 C3 AE C3 B6 C3 8A C3 9C  Test - Ã©Ã Ã®Ã¶Ã</font>
+
+   
+  <b><font color="#006666">Debug</font></b> <font color="#006666">TUnicode</font>(*Mem3, <font color="#924B72">#PB_Unicode</font>)
+  <font color="#006666">;ShowMemoryViewer(*Mem3, StringByteLength(&quot;Test - éàîöÊÜ&quot;, #PB_Unicode)) ;54 00 65 00 73 00 74 00 20 00 2D 00 20 00 E9 00  T.e.s.t. .-. .é.</font>
+                                                                           <font color="#006666">; E0 00 EE 00 F6 00 CA 00 DC 00                    à.î.ö.Ê.Ü.</font>
+  
+<font color="#006666">  FreeMemory</font>(*Mem1):<font color="#006666">FreeMemory</font>(*Mem2):<font color="#006666">FreeMemory</font>(*Mem3)
+</font></pre>
+
+</blockquote><p><b>See Also</b></p><blockquote>
+
+<a href="utf8.html">UTF8()</a>, <a href="ascii.html">Ascii()</a>, <a href="../memory/freememory.html">FreeMemory()</a>, <a href="../memory/memorysize.html">MemorySize()</a> 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=unescapestring.html>UnescapeString()</a> - <a href=index.html>String Index</a> - <a href=val.html>Val()</a> -><br><br>
+
+</body></html>

@@ -1,0 +1,66 @@
+<html><head><title>HIDInfo</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">HIDInfo()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result$ = <font color="#006666"><b>HIDInfo</b></font>(Type [, #HID])</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Get more information about the HID device. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>Type</i></td>
+<td width="90%"> 
+The type of information to retrieve. It can be one of the following value: 
+<pre><font face="Courier New, Courier, mono" size="2">  <font color="#924B72">#PB_HID_Path</font>           : the platform-specific device path.
+  <font color="#924B72">#PB_HID_VendorId</font>       : the device vendor ID.
+  <font color="#924B72">#PB_HID_ProductId</font>      : the device product ID.
+  <font color="#924B72">#PB_HID_SerialNumber</font>   : the serial number.
+  <font color="#924B72">#PB_HID_ReleaseNumber</font>  : the device release number in binary-coded decimal, also known as device version number.
+  <font color="#924B72">#PB_HID_Manufacturer</font>   : the manufacturer.
+  <font color="#924B72">#PB_HID_Product</font>        : the product.
+  <font color="#924B72">#PB_HID_UsagePage</font>      : the usage page this device.
+  <font color="#924B72">#PB_HID_Usage</font>          : the usage for this device.
+  <font color="#924B72">#PB_HID_InterfaceNumber</font>: the USB interface which this logical device represents (only valid for USB devices)
+  <font color="#924B72">#PB_HID_BusType</font>        : the underlying bus type. Can be one of the following value:
+                            0: Unknown
+                            1: USB
+                            2: Bluetooth
+                            3: I2C
+                            4: SPI
+</font></pre>
+
+</td></tr>
+<tr><td><i>#HID (optional)</i></td>
+<td> 
+The HID device to query. If not specified, uses the current device from enumeration started with <a href="examinehids.html">ExamineHIDs()</a>. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Returns a string containing the requested HID information. 
+
+<pre><font face="Courier New, Courier, mono" size="2">  <b><font color="#006666">If</font></b> <font color="#006666">ExamineHIDs</font>()
+    <b><font color="#006666">While</font></b> <font color="#006666">NextHID</font>()
+      <b><font color="#006666">Debug</font></b> &quot;Found HID device: &quot; +<font color="#006666"> HIDInfo</font>(<font color="#924B72">#PB_HID_Product</font>)
+      <b><font color="#006666">Debug</font></b> &quot;Found HID device: &quot; +<font color="#006666"> HIDInfo</font>(<font color="#924B72">#PB_HID_Manufacturer</font>)
+      <b><font color="#006666">Debug</font></b> &quot;Found HID device: &quot; +<font color="#006666"> HIDInfo</font>(<font color="#924B72">#PB_HID_Path</font>)
+      <b><font color="#006666">Debug</font></b> &quot;---------------------------------------------------&quot;
+    <b><font color="#006666">Wend</font></b>
+  <b><font color="#006666">EndIf</font></b>
+</font></pre>
+
+</blockquote><p><b>See Also</b></p><blockquote>
+
+<a href="examinehids.html">ExamineHIDs()</a>, <a href="nexthid.html">NextHID()</a> 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=hiderror.html>HIDError()</a> - <a href=index.html>HID Index</a> - <a href=ishid.html>IsHID()</a> -><br><br>
+
+</body></html>

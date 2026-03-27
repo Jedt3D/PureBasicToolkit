@@ -1,0 +1,54 @@
+<html><head><title>OpenHID</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">OpenHID()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result = <font color="#006666"><b>OpenHID</b></font>(#HID, VendorId, ProductId [, SerialNumber])</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Open the specified HID device for read or write operations. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#HID</i></td>
+<td width="90%"> 
+The number to identify the HID device. 
+
+</td></tr>
+<tr><td><i>VendorId</i></td>
+<td> 
+The vendor ID of the device to open. 
+
+</td></tr>
+<tr><td><i>ProductId</i></td>
+<td> 
+The product ID of the device to open. 
+
+</td></tr>
+<tr><td><i>SerialNumber (optional)</i></td>
+<td> 
+The serial number of the specific device to open (if multiple devices with same VID/PID exist). 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Returns nonzero if the device was opened successfully and zero if there was an error. 
+
+</blockquote><p><b>Remarks</b></p><blockquote>
+
+This function opens a HID device by its Vendor ID and Product ID. If multiple devices with the same 
+VID/PID exist, specify the SerialNumber to open a specific device. 
+
+</blockquote><p><b>See Also</b></p><blockquote>
+
+<a href="openhidpath.html">OpenHIDPath()</a>, <a href="closehid.html">CloseHID()</a> 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=nexthid.html>NextHID()</a> - <a href=index.html>HID Index</a> - <a href=openhidpath.html>OpenHIDPath()</a> -><br><br>
+
+</body></html>

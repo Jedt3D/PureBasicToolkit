@@ -1,0 +1,56 @@
+<html><head><title>OpenScreenWindow</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">OpenScreenWindow()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result = <font color="#006666"><b>OpenScreenWindow</b></font>(#ScreenWindow, x, y, InnerWidth, InnerHeight, Title$ [, Flags])</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Opens a new window on the current <a href="../screen/openscreen.html">screen</a> according to the specified parameters. 
+The new window becomes the active window. All possible events in a window are handled with <a href="screenwindowevent.html">ScreenWindowEvent()</a>. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#ScreenWindow</i></td>
+<td width="90%"> 
+A number to identify the new window. 
+<a href="../reference/purebasic_objects.html">#PB_Any</a> can be used to auto-generate this number. 
+
+</td></tr>
+<tr><td><i>x, y</i></td>
+<td> 
+The initial position of the window on the screen (unless one of the center flags is used). 
+
+</td></tr>
+<tr><td><i>InnerWidth, InnerHeight</i></td>
+<td> 
+The initial size of the client area of the window (without borders and window 
+decorations). 
+
+</td></tr>
+<tr><td><i>Flags (optional)</i></td>
+<td> 
+It can be a combination of the following values: 
+<pre><font face="Courier New, Courier, mono" size="2">  <font color="#924B72">#PB_ScreenWindow_SizeGadget</font> : Adds the sizeable feature to a window.
+  <font color="#924B72">#PB_ScreenWindow_Invisible</font>  : Creates the window but doesn't display it.
+  <font color="#924B72">#PB_ScreenWindow_BorderLess</font> : Creates a window without any borders.
+</font></pre>
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Nonzero if the window has been successfully opened, zero otherwise. 
+
+</blockquote><p><b>See Also</b></p><blockquote>
+
+<a href="closescreenwindow.html">CloseScreenWindow()</a>, <a href="screenwindowevent.html">ScreenWindowEvent()</a> 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=openscreengadgetlist.html>OpenScreenGadgetList()</a> - <a href=index.html>ScreenGadget Index</a> - <a href=optionscreengadget.html>OptionScreenGadget()</a> -><br><br>
+
+</body></html>

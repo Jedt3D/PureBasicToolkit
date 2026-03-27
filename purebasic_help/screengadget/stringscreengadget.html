@@ -1,0 +1,63 @@
+<html><head><title>StringScreenGadget</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">StringScreenGadget()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result = <font color="#006666"><b>StringScreenGadget</b></font>(#ScreenGadget, x, y, Width, Height, Content$ [, Flags])</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Creates a String gadget in the current GadgetList. 
+This gadget accepts only one line of text. To get multi-line input, use the <a href="editorscreengadget.html">EditorScreenGadget()</a> function. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#ScreenGadget</i></td>
+<td width="90%"> 
+A number to identify the new gadget. <a href="../reference/purebasic_objects.html">#PB_Any</a> can 
+be used to auto-generate this number. 
+
+</td></tr>
+<tr><td><i>x, y, Width, Height</i></td>
+<td> 
+The position and dimensions of the new gadget. 
+
+</td></tr>
+<tr><td><i>Content$</i></td>
+<td> 
+The initial text content. 
+
+</td></tr>
+<tr><td><i>Flags (optional)</i></td>
+<td> 
+It can be a combination of the following values: 
+<pre><font face="Courier New, Courier, mono" size="2">  <font color="#924B72">#PB_String_ReadOnly</font>   : Read-only mode. No text can be entered.
+</font></pre>
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Nonzero on success, zero otherwise. If <font color="#924B72">#PB_Any</font> was used as the #ScreenGadget parameter 
+then the return-value is the auto-generated gadget number on success. 
+
+</blockquote><p><b>Remarks</b></p><blockquote>
+
+Later the content can be changed with <a href="setscreengadgettext.html">SetScreenGadgetText()</a> and received with <a href="getscreengadgettext.html">GetScreenGadgetText()</a>. 
+<br>
+<br>
+The following events are supported through <a href="screeneventtype.html">ScreenEventType()</a>: 
+<pre><font face="Courier New, Courier, mono" size="2">  <font color="#924B72">#PB_ScreenEventType_Change</font>    : The text has been modified by the user.
+  <font color="#924B72">#PB_ScreenEventType_Focus</font>     : The StringGadget got the focus.
+  <font color="#924B72">#PB_ScreenEventType_LostFocus</font> : The StringGadget lost the focus.
+</font></pre>
+
+To add a 'mini help' to this gadget, use <a href="screengadgettooltip.html">ScreenGadgetToolTip()</a>. 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=splitterscreengadget.html>SplitterScreenGadget()</a> - <a href=index.html>ScreenGadget Index</a> - <a href=textscreengadget.html>TextScreenGadget()</a> -><br><br>
+
+</body></html>

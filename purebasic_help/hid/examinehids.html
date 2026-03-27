@@ -1,0 +1,53 @@
+<html><head><title>ExamineHIDs</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">ExamineHIDs()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result = <font color="#006666"><b>ExamineHIDs</b></font>([VendorId [, ProductId]])</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Start the enumeration of available HID devices. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>VendorId (optional)</i></td>
+<td width="90%"> 
+Filter devices by specific vendor ID. 
+
+</td></tr>
+<tr><td><i>ProductId (optional)</i></td>
+<td> 
+Filter devices by specific product ID. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Returns nonzero if the enumeration was started successfully and zero if there was an error. 
+
+</blockquote><p><b>Remarks</b></p><blockquote>
+
+Use this function to begin enumerating HID devices. After calling ExamineHIDs(), use <a href="nexthid.html">NextHID()</a> to iterate through 
+the available devices. 
+
+</blockquote><p><b>Example</b></p><blockquote>
+
+<pre><font face="Courier New, Courier, mono" size="2">  <b><font color="#006666">If</font></b> <font color="#006666">ExamineHIDs</font>()
+    <b><font color="#006666">While</font></b> <font color="#006666">NextHID</font>()
+      <b><font color="#006666">Debug</font></b> &quot;Found HID device: &quot; +<font color="#006666"> HIDInfo</font>(<font color="#924B72">#PB_HID_Product</font>)
+    <b><font color="#006666">Wend</font></b>
+  <b><font color="#006666">EndIf</font></b>
+</font></pre>
+
+</blockquote><p><b>See Also</b></p><blockquote>
+
+<a href="nexthid.html">NextHID()</a>, <a href="hidinfo.html">HIDInfo()</a> 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=disablehidblockingmode.html>DisableHIDBlockingMode()</a> - <a href=index.html>HID Index</a> - <a href=gethidindexedstring.html>GetHIDIndexedString()</a> -><br><br>
+
+</body></html>

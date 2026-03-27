@@ -1,0 +1,34 @@
+<html><head><title>GetHIDReportDescriptor</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">GetHIDReportDescriptor()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+*Buffer = <font color="#006666"><b>GetHIDReportDescriptor</b></font>(#HID)</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Get the HID report descriptor from the device as memory buffer. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#HID</i></td>
+<td width="90%"> 
+The HID device to query. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Returns the report descriptor as a memory buffer. To get the size of the descriptor, use <a href="../memory/memorysize.html">MemorySize()</a>. Once the descriptor is no more needed, it can be freed with <a href="../memory/freememory.html">FreeMemory()</a>. 
+
+</blockquote><p><b>Remarks</b></p><blockquote>
+
+The report descriptor describes the data format and capabilities of the HID device. 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=gethidindexedstring.html>GetHIDIndexedString()</a> - <a href=index.html>HID Index</a> - <a href=hiderror.html>HIDError()</a> -><br><br>
+
+</body></html>
