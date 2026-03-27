@@ -4,9 +4,19 @@ on:
   push:
     tags:
       - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version to tag and publish (for example 0.3.0 or v0.3.0)"
+        required: true
+        type: string
 
 permissions:
   contents: write
+
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref_name || inputs.version }}
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -15,6 +25,32 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve release metadata
+        id: meta
+        shell: bash
+        run: |
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            if [ "${GITHUB_REF_NAME}" != "main" ]; then
+              echo "Manual releases must be dispatched from the main branch."
+              exit 1
+            fi
+
+            VERSION_INPUT="${{ inputs.version }}"
+            VERSION="${VERSION_INPUT#v}"
+            TAG="v${VERSION}"
+            CREATE_TAG="true"
+          else
+            TAG="${GITHUB_REF_NAME}"
+            VERSION="${TAG#v}"
+            CREATE_TAG="false"
+          fi
+
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
+          echo "create_tag=${CREATE_TAG}" >> "${GITHUB_OUTPUT}"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -29,8 +65,61 @@ jobs:
         shell: bash
         run: |
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
-          if [ "v${PACKAGE_VERSION}" != "${GITHUB_REF_NAME}" ]; then
-            echo "Tag ${GITHUB_REF_NAME} does not match package.json version v${PACKAGE_VERSION}"
+          if [ "${PACKAGE_VERSION}" != "${{ steps.meta.outputs.version }}" ]; then
+            echo "Release version ${{ steps.meta.outputs.version }} does not match package.json version ${PACKAGE_VERSION}"
+            exit 1
+          fi
+
+      - name: Verify changelog contains this version
+        shell: bash
+        env:
+          RELEASE_VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          node - <<'JS'
+          const fs = require('fs');
+          const version = process.env.RELEASE_VERSION;
+          const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
+          const escaped = version.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp(`^## \\[${escaped}\\] - `, 'm');
+
+          if (!regex.test(changelog)) {
+            throw new Error(`CHANGELOG.md does not contain a section for ${version}`);
+          }
+          JS
+
+      - name: Prepare release notes from changelog
+        shell: bash
+        env:
+          RELEASE_VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          node - <<'JS'
+          const fs = require('fs');
+          const version = process.env.RELEASE_VERSION;
+          const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
+          const escaped = version.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp(`^## \\[${escaped}\\] - .*?\\n([\\s\\S]*?)(?=^## \\[|\\Z)`, 'm');
+          const match = regex.exec(changelog);
+
+          if (!match) {
+            throw new Error(`Could not extract release notes for ${version}`);
+          }
+
+          const body = [
+            `# PureBasic Toolkit v${version}`,
+            '',
+            match[1].trim(),
+            '',
+          ].join('\n');
+
+          fs.writeFileSync('release-notes.md', body);
+          JS
+
+      - name: Verify tag does not already exist
+        if: steps.meta.outputs.create_tag == 'true'
+        shell: bash
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/${{ steps.meta.outputs.tag }}" >/dev/null 2>&1; then
+            echo "Tag ${{ steps.meta.outputs.tag }} already exists on origin."
             exit 1
           fi
 
@@ -40,8 +129,19 @@ jobs:
       - name: Package VSIX
         run: npm run package:vsix
 
+      - name: Create and push release tag
+        if: steps.meta.outputs.create_tag == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.meta.outputs.tag }}" -m "PureBasic Toolkit ${{ steps.meta.outputs.tag }}"
+          git push origin "${{ steps.meta.outputs.tag }}"
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.meta.outputs.tag }}
+          name: PureBasic Toolkit ${{ steps.meta.outputs.tag }}
+          body_path: release-notes.md
           files: purebasic-toolkit-*.vsix
-          generate_release_notes: true

@@ -142,6 +142,23 @@ Current release prep notes:
 
 - `docs/releases/v0.3.0.md`
 
+## GitHub Release Flow
+
+Recommended release flow:
+
+1. merge the release PR into `main`
+2. open GitHub Actions
+3. run the `Release` workflow manually on `main`
+4. enter the version, for example `0.3.0`
+
+What the manual release workflow does:
+
+- verifies the requested version matches `package.json`
+- verifies `CHANGELOG.md` contains that version
+- builds the extension and packages the `.vsix`
+- creates and pushes the tag
+- publishes the GitHub Release with notes derived from `CHANGELOG.md`
+
 ## Source Material
 
 The extension should use these local sources as authorities:
