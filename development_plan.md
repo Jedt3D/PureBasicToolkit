@@ -69,6 +69,17 @@ The repo should gradually converge toward this structure:
 
 The extension product files should live at the repo root. The PureBasic corpora stay in place as support material, test material, and future doc/index sources.
 
+## Release Automation
+
+The preferred release rhythm is:
+
+1. merge the release PR into `main`
+2. use the manual GitHub Actions `Release` workflow on `main`
+3. provide the intended version number
+4. let the workflow validate `package.json`, validate `CHANGELOG.md`, create the tag, build the `.vsix`, and publish the GitHub Release
+
+Avoid automatic tag creation on every merge. Version tags should remain an explicit release decision.
+
 ## Phases
 
 ## Phase 0 - Foundation and Product Skeleton
@@ -246,6 +257,15 @@ Turn repo knowledge and PureBasic pitfalls into helpful editor guidance.
 
 - diagnostics provide real signal without spamming users
 - the extension starts to reflect PureBasic-specific expertise, not just generic editor behavior
+
+### Phase 4 Baseline Shipped
+
+Version `0.4.0` establishes the first diagnostics slice with:
+
+- `EnableExplicit` guidance
+- console executable format hints for IDE-driven book examples
+- `IncludeFile` to `XIncludeFile` suggestions
+- user settings to keep diagnostics lightweight and adjustable
 
 ## Phase 5 - Release Hardening and Distribution
 

@@ -181,7 +181,7 @@ ForEver
 ### Codex Notes
 - `.codex/commands/` contains quick command references for Codex-oriented repo usage
 - Prefer the scripts in `scripts/` as the source of truth over tool-specific wrappers
-- The extension currently exposes `check`, `compile`, and `run` commands through the repo scripts
+- The extension currently exposes `check`, `compile`, and `run` commands through the repo scripts, plus offline docs and lightweight diagnostics
 - Review generated trees with syntax checks before making style or behavior claims
 
 ### Common Gotchas
