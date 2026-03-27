@@ -1,0 +1,333 @@
+<html><head><title>CameraView.pb</title><meta charset=~"utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<pre><font face="Courier New, Courier, mono" size="2"><font color="#006666">; onde 3D - Pf shadoko - 2015
+
+</font><b><font color="#006666">EnableExplicit</font></b>
+
+
+<b><font color="#006666">Macro</font></b> f3:vector3:<b><font color="#006666">EndMacro</font></b>
+
+<b><font color="#006666">Structure</font></b> MeshVertexV
+    p.f3
+    n.f3
+    t.f3
+    u.f
+    v.f
+    color.l
+<b><font color="#006666">EndStructure</font></b>
+
+<b><font color="#006666">Macro</font></b> <font color="#006666">add3d</font>(p,p1,p2)
+    p\x=p1\x+p2\x
+    p\y=p1\y+p2\y
+    p\z=p1\z+p2\z
+<b><font color="#006666">EndMacro</font></b>
+
+<b><font color="#006666">Macro</font></b> <font color="#006666">sub3D</font>(p,p1,p2)
+    p\x=p1\x-p2\x
+    p\y=p1\y-p2\y
+    p\z=p1\z-p2\z
+<b><font color="#006666">EndMacro</font></b>
+
+<b><font color="#006666">Macro</font></b> <font color="#006666">lng3D</font>(v)
+<font color="#006666">    Sqr</font>(V\x * V\x + V\y * V\y + V\z * V\z)
+<b><font color="#006666">EndMacro</font></b>
+
+<b><font color="#006666">Procedure</font></b> <font color="#006666">Norme3D</font>(*V.f3,l.f=1)
+    <b><font color="#006666">Protected</font></b>.f lm
+    lm = l /<font color="#006666"> lng3D</font>(*v)
+    *V\x * lm
+    *V\y * lm
+    *V\z * lm  
+<b><font color="#006666">EndProcedure</font></b>
+
+<b><font color="#006666">Procedure</font></b> <font color="#006666">cross3d</font>(*r.f3,*p.f3,*q.f3)
+    *r\x=*p\y * *q\z - *p\z * *q\y 
+    *r\y=*p\z * *q\x - *p\x * *q\z 
+    *r\z=*p\x * *q\y - *p\y * *q\x 
+<b><font color="#006666">EndProcedure</font></b>
+
+<b><font color="#006666">Procedure</font></b> <font color="#006666">NormalizeMesh2</font>(mesh)
+	<b><font color="#006666">Protected</font></b> nv,ni,i,sm,f0,f1,f2
+	<b><font color="#006666">Protected</font></b>.f3 ps,v1,v2,ecart
+	
+	<b><font color="#006666">For</font></b> sm=0 <b><font color="#006666">To</font></b> <font color="#006666">SubMeshCount</font>(mesh)-1
+		nv=<font color="#006666">MeshVertexCount</font>(mesh,sm)-1
+		ni=<font color="#006666">MeshIndexCount</font>(mesh,sm)-1
+		<b><font color="#006666">Dim</font></b> <font color="#006666">v</font>.MeshVertexv(nv)
+		<b><font color="#006666">Dim</font></b> <font color="#006666">f</font>.MeshFace(ni)
+<font color="#006666">		GetMeshData</font>(mesh,sm,<font color="#006666">v</font>(),<font color="#924B72">#PB_Mesh_Vertex</font>,0,nv)  
+<font color="#006666">		GetMeshData</font>(mesh,sm,<font color="#006666">f</font>(),<font color="#924B72">#PB_Mesh_Face</font>,0,ni) 
+		<b><font color="#006666">For</font></b> i=0 <b><font color="#006666">To</font></b> ni <b><font color="#006666">Step</font></b> 3
+			f0=<font color="#006666">f</font>(i  )\Index
+			f1=<font color="#006666">f</font>(i+1)\Index
+			f2=<font color="#006666">f</font>(i+2)\Index
+<font color="#006666">			sub3d</font>(v1,<font color="#006666">v</font>(f1)\p,<font color="#006666">v</font>(f0)\p)
+<font color="#006666">			sub3d</font>(v2,<font color="#006666">v</font>(f2)\p,<font color="#006666">v</font>(f0)\p)
+<font color="#006666">			cross3d</font>(ps,v1,v2)
+<font color="#006666">			add3d</font>(<font color="#006666">v</font>(f0)\n,<font color="#006666">v</font>(f0)\n,ps)
+<font color="#006666">			add3d</font>(<font color="#006666">v</font>(f1)\n,<font color="#006666">v</font>(f1)\n,ps)
+<font color="#006666">			add3d</font>(<font color="#006666">v</font>(f2)\n,<font color="#006666">v</font>(f2)\n,ps)
+		<b><font color="#006666">Next</font></b>
+		<b><font color="#006666">For</font></b> i=0 <b><font color="#006666">To</font></b> nv:<font color="#006666">Norme3D</font>(<font color="#006666">v</font>(i)\n,1):<b><font color="#006666">Next</font></b>
+<font color="#006666">		SetMeshData</font>(mesh,sm,<font color="#006666">v</font>(),<font color="#924B72">#PB_Mesh_Normal</font>,0,nv)
+	<b><font color="#006666">Next</font></b>
+<b><font color="#006666">EndProcedure</font></b>
+
+<b><font color="#006666">Structure</font></b> Tonde
+  cpt.l
+  lv.w
+  ct.w
+  ef.b
+  GoNb.b
+  dx.w
+  dy.w
+  <b><font color="#006666">Array</font></b> <font color="#006666">a0</font>.w(0,0)
+  <b><font color="#006666">Array</font></b> <font color="#006666">a1</font>.w(0,0)
+  <b><font color="#006666">Array</font></b> <font color="#006666">a2</font>.w(0,0)
+  <b><font color="#006666">Array</font></b> <font color="#006666">a3</font>.w(0,0)
+  <b><font color="#006666">Array</font></b> <font color="#006666">Tonde</font>.w(255)
+  <b><font color="#006666">Array</font></b> <font color="#006666">gocp</font>.l(63)
+  <b><font color="#006666">Array</font></b> <font color="#006666">mx</font>.l(63)
+  <b><font color="#006666">Array</font></b> <font color="#006666">my</font>.l(63)
+<b><font color="#006666">EndStructure</font></b>
+
+<b><font color="#006666">Procedure</font></b> <font color="#006666">onde2D</font>(*o.tonde)
+  <b><font color="#006666">Macro</font></b> <font color="#006666">sinL</font>(a, li, ls)
+    (<font color="#006666">Sin</font>(a / 512) + 1) * (ls - li) / 2 + li
+  <b><font color="#006666">EndMacro</font></b>
+  <b><font color="#006666">Protected</font></b> i,j,pox,poy,aa1
+  <b><font color="#006666">With</font></b> *o
+    <b><font color="#006666">If</font></b> \cpt=0
+      <b><font color="#006666">Dim</font></b> \<font color="#006666">a0</font>(\dy - 1,\dx - 1)
+      <b><font color="#006666">Dim</font></b> \<font color="#006666">a1</font>(\dy - 1,\dx - 1)
+      <b><font color="#006666">Dim</font></b> \<font color="#006666">a2</font>(\dy - 1,\dx - 1)
+      <b><font color="#006666">Dim</font></b> \<font color="#006666">a3</font>(\dy - 1,\dx - 1)
+      <b><font color="#006666">Dim</font></b> \<font color="#006666">Tonde</font>(255)
+      <b><font color="#006666">Dim</font></b> \<font color="#006666">gocp</font>(63)
+      <b><font color="#006666">Dim</font></b> \<font color="#006666">mx</font>(63)
+      <b><font color="#006666">Dim</font></b> \<font color="#006666">my</font>(63)
+      <b><font color="#006666">For</font></b> i = 0 <b><font color="#006666">To</font></b> \lv: \<font color="#006666">tonde</font>(i) = \ct * \lv*<font color="#006666">Sin</font>((2 * i * <font color="#924B72">#PI</font>)/\lv ): <b><font color="#006666">Next</font></b>
+      <b><font color="#006666">For</font></b> i = 0 <b><font color="#006666">To</font></b> \GoNb - 1: \<font color="#006666">gocp</font>(i) = i * (\lv / \GoNb): \<font color="#006666">mx</font>(i) = 0: \<font color="#006666">my</font>(i) = 0: <b><font color="#006666">Next</font></b>
+    <b><font color="#006666">ElseIf</font></b> \cpt&lt;500
+      <font color="#006666">; arriv	 des perturbations
+</font>      <b><font color="#006666">If</font></b> \ef&lt;4
+      <b><font color="#006666">For</font></b> i = 0 <b><font color="#006666">To</font></b> \GoNb - 1
+        <b><font color="#006666">If</font></b> \<font color="#006666">gocp</font>(i) = 0
+          <b><font color="#006666">Select</font></b> \ef
+            <b><font color="#006666">Case</font></b> 1: pox =<font color="#006666"> Random </font>(\dx - 16,16)         : poy =<font color="#006666"> Random </font>(\dy - 16,16)
+            <b><font color="#006666">Case</font></b> 2: pox =<font color="#006666"> sinL</font>(\cpt * 40, 16, \dx - 16): poy =<font color="#006666"> sinL</font>(\cpt * 48, 16, \dy - 16)
+            <b><font color="#006666">Case</font></b> 3: pox =<font color="#006666"> sinL</font>(\cpt * 20, 16, \dx - 16): poy =<font color="#006666"> sinL</font>(\cpt * 24, 16, \dy - 16)
+          <b><font color="#006666">EndSelect</font></b>
+          \<font color="#006666">mx</font>(i) = pox
+          \<font color="#006666">my</font>(i) = poy
+        <b><font color="#006666">EndIf</font></b>
+        \<font color="#006666">a1</font>( \<font color="#006666">my</font>(i),\<font color="#006666">mx</font>(i))  - \<font color="#006666">tonde</font>(\<font color="#006666">gocp</font>(i))
+        \<font color="#006666">gocp</font>(i) = (\<font color="#006666">gocp</font>(i) + 1) % \lv
+      <b><font color="#006666">Next</font></b>
+    <b><font color="#006666">Else</font></b>
+      \<font color="#006666">a1</font>(\dy/2,\dx/2)-<font color="#006666">Sin</font>(\cpt/\lv*5/3*<font color="#924B72">#PI</font>)*\ct*40
+    <b><font color="#006666">EndIf</font></b>
+  <b><font color="#006666">EndIf</font></b>
+    <font color="#006666">; propagation (si un programmeur ASM veut bien convertir cette routine...)
+</font><font color="#006666">    CopyArray</font>(\<font color="#006666">a1</font>(),\<font color="#006666">a0</font>())
+<font color="#006666">    CopyArray</font>(\<font color="#006666">a2</font>(),\<font color="#006666">a1</font>())
+    <b><font color="#006666">For</font></b> j = 1 <b><font color="#006666">To</font></b> \dy-2
+      <b><font color="#006666">For</font></b> i = 1 <b><font color="#006666">To</font></b> \dx-2
+        aa1 = \<font color="#006666">a1</font>(j,i) /2
+        \<font color="#006666">a2</font>(j,i + 1) + aa1
+        \<font color="#006666">a2</font>(j,i - 1) + aa1
+        \<font color="#006666">a2</font>(j + 1,i) + aa1
+        \<font color="#006666">a2</font>(j - 1,i) + aa1
+        \<font color="#006666">a2</font>(j,i) - \<font color="#006666">a1</font>(j,i) - \<font color="#006666">a0</font>(j,i)
+      <b><font color="#006666">Next</font></b>
+    <b><font color="#006666">Next</font></b>
+    <font color="#006666">; amortissement temporel
+</font>    <b><font color="#006666">For</font></b> j = 1 <b><font color="#006666">To</font></b> \dy-2
+      <b><font color="#006666">For</font></b> i = 1 <b><font color="#006666">To</font></b> \dx-2
+        \<font color="#006666">a3</font>(j,i)+ (\<font color="#006666">a2</font>(j,i) - \<font color="#006666">a3</font>(j,i))*0.2
+      <b><font color="#006666">Next</font></b>
+    <b><font color="#006666">Next</font></b>
+    <font color="#006666">; attenuation (sur les bords), mettez en commentaire, l'onde se reflechira !
+</font>    <b><font color="#006666">If</font></b> \ef&lt;4
+    <b><font color="#006666">For</font></b> i = 0 <b><font color="#006666">To</font></b> \dx - 1: \<font color="#006666">a1</font>(1,i)/2: \<font color="#006666">a1</font>(\dy-2,i)/2: <b><font color="#006666">Next</font></b>
+    <b><font color="#006666">For</font></b> j = 0 <b><font color="#006666">To</font></b> \dy - 1: \<font color="#006666">a1</font>(j,1)/2: \<font color="#006666">a1</font>(j,\dx-2)/2: <b><font color="#006666">Next</font></b> 
+    <b><font color="#006666">EndIf</font></b>
+    \cpt+1
+  <b><font color="#006666">EndWith</font></b>
+  
+<b><font color="#006666">EndProcedure</font></b>
+
+<b><font color="#006666">Procedure</font></b> <font color="#006666">planmodif</font>(*o.tonde)
+  <b><font color="#006666">Protected</font></b> i,j
+  <b><font color="#006666">Protected</font></b> <b><font color="#006666">Dim</font></b> <font color="#006666">MeshData</font>.MeshVertex(0)
+<font color="#006666">  onde2d</font>(*o)
+<font color="#006666">  GetMeshData</font>(0, 0,<font color="#006666"> MeshData</font>(), <font color="#924B72">#PB_Mesh_Vertex</font>,0,<font color="#006666"> MeshVertexCount</font>(0,0)-1)
+  <b><font color="#006666">For</font></b> j=2 <b><font color="#006666">To</font></b> *o\dy-3
+    <b><font color="#006666">For</font></b> i=2 <b><font color="#006666">To</font></b> *o\dx-3
+  <font color="#006666">;    MeshData(j* *o\dx+i)\y =-*o\a3(j,i)/64
+</font>    <b><font color="#006666">Next</font></b>
+  <b><font color="#006666">Next</font></b>
+  <font color="#006666">;SetMeshData(0,0, MeshData(), #PB_Mesh_Vertex, 0, MeshVertexCount(0,0)-1)
+</font>  <font color="#006666">;NormalizeMesh2(0)
+</font><b><font color="#006666">EndProcedure</font></b>
+
+<b><font color="#006666">Define</font></b>.f KeyX, KeyY,keyz, MouseX, MouseY
+<b><font color="#006666">Define</font></b> i,j,modif,cpt,ex,ey,CubeMapTexture,p
+<b><font color="#006666">Define</font></b> o.tonde
+o\dx= 128     <font color="#006666">;essayez avec 256 pour les machines un peu rapide
+</font>o\dy= 128     <font color="#006666">;                    &quot;           &quot;      
+</font>o\lv = 8*2    <font color="#006666">;largeur des vagues (valeur minimum: 8) 
+</font>o\ct = 64*2   <font color="#006666">;hauteur des vagues
+</font>o\ef = 1      <font color="#006666">;effets [F1/F2/F3/F4]
+</font>o\GoNb = 8    <font color="#006666">;nombre de &quot;gouttes&quot; simultan	s
+
+</font>modif=1  
+cpt=0   
+
+<font color="#006666">InitEngine3D</font>()
+<font color="#006666">InitSprite</font>()
+<font color="#006666">InitKeyboard</font>()
+<font color="#006666">InitMouse</font>()
+
+<font color="#006666">OpenWindow</font>(0, 0, 0, 400,400, &quot;Onde 2D&quot;)
+ex=<font color="#006666">WindowWidth </font>(0,<font color="#924B72">#PB_Window_InnerCoordinate</font>)
+ey=<font color="#006666">WindowHeight</font>(0,<font color="#924B72">#PB_Window_InnerCoordinate</font>)
+<font color="#006666">OpenWindowedScreen</font>(<font color="#006666">WindowID</font>(0), 0, 0, ex, ey, 0, 0, 0 ,<font color="#924B72">#PB_Screen_NoSynchronization</font>)
+
+<font color="#006666">Add3DArchive</font>(<font color="#924B72">#PB_Compiler_Home</font> + &quot;examples/3d/Data/Textures&quot;, <font color="#924B72">#PB_3DArchive_FileSystem</font>)
+<font color="#006666">Add3DArchive</font>(<font color="#924B72">#PB_Compiler_Home</font> + &quot;examples/3d/Data/Packs/desert.zip&quot;, <font color="#924B72">#PB_3DArchive_Zip</font>)
+<font color="#006666">Add3DArchive</font>(<font color="#924B72">#PB_Compiler_Home</font> + &quot;examples/3d/Data/Scripts&quot;, <font color="#924B72">#PB_3DArchive_FileSystem</font>)
+<font color="#006666">Add3DArchive</font>(<font color="#924B72">#PB_Compiler_Home</font> + &quot;examples/3d/Data/Models&quot;, <font color="#924B72">#PB_3DArchive_FileSystem</font>)
+<font color="#006666">Parse3DScripts</font>()
+
+<font color="#006666">CreateCamera</font>(0, 0, 0, 100, 100):<font color="#006666">MoveCamera</font>(0, -500, 300, -500, <font color="#924B72">#PB_Absolute</font>):<font color="#006666">CameraLookAt</font>(0, 0, 100, 0):<font color="#006666">CameraFOV</font>(0,45)
+<font color="#006666">SkyBox</font>(&quot;desert07.jpg&quot;)
+<font color="#006666">CreateLight</font>(0,$777777, -10000, 10000, -10000)
+<font color="#006666">AmbientColor</font>($888888)
+
+<font color="#006666">;AmbientColor($111111* 4)
+</font><font color="#006666">Fog</font>($ffffff,1,10000,10001)<font color="#006666">;     &lt;---  !!!   required to use these shaders !!!
+
+</font><font color="#006666">;CreateLight(0, $111111* 8*10, 8000, 4000,0)
+
+</font><b><font color="#006666">CompilerIf</font></b> 0
+<b><font color="#006666">Macro</font></b> <font color="#006666">lt</font>(face):<font color="#006666">LoadTexture</font>(<font color="#924B72">#PB_Any</font>,&quot;desert07_&quot;+face+&quot;.jpg&quot;):<b><font color="#006666">EndMacro</font></b>
+<b><font color="#006666">CompilerIf</font></b> <font color="#924B72">#PB_Compiler_Version</font> &lt; 620
+<font color="#006666">  CreateCubicTexture</font>(0,<font color="#006666">lt</font>(&quot;RT&quot;),<font color="#006666">lt</font>(&quot;LF&quot;),<font color="#006666">lt</font>(&quot;UP&quot;),<font color="#006666">lt</font>(&quot;DN&quot;),<font color="#006666">lt</font>(&quot;FR&quot;),<font color="#006666">lt</font>(&quot;BK&quot;))
+<b><font color="#006666">CompilerElse</font></b>
+<font color="#006666">  CreateCubicTexture</font>(0,<font color="#006666">lt</font>(&quot;px&quot;),<font color="#006666">lt</font>(&quot;nx&quot;),<font color="#006666">lt</font>(&quot;py&quot;),<font color="#006666">lt</font>(&quot;ny&quot;),<font color="#006666">lt</font>(&quot;pz&quot;),<font color="#006666">lt</font>(&quot;nz&quot;))
+<b><font color="#006666">CompilerEndIf</font></b>
+<font color="#006666">CreateTexture</font>(1,1,1):<font color="#006666">StartDrawing</font>(<font color="#006666">TextureOutput</font>(1)):<font color="#006666">DrawingMode</font>(<font color="#924B72">#PB_2DDrawing_AllChannels</font>):<font color="#006666">Box</font>(0,0,1,1,$ff0000ff):<font color="#006666">StopDrawing</font>()
+<font color="#006666">CreateShaderMaterial</font>(1,<font color="#924B72">#PB_Material_CubicEnvShader</font>)
+<font color="#006666">MaterialShaderTexture</font>(1,<font color="#006666">TextureID</font>(0),<font color="#006666">TextureID</font>(1),0,0)
+<font color="#006666">MaterialShaderParameter</font>(1,1,&quot;glossy&quot;,<font color="#924B72">#PB_Shader_Float</font>,0.8,0,0,0)
+<font color="#006666">CreatePlane</font>(0,1025,1025,o\dx-1,o\dy-1,1,1)
+<font color="#006666">CreateEntity</font>(0,<font color="#006666"> MeshID</font>(0),<font color="#006666"> MaterialID</font>(1))
+
+<font color="#006666">CreateShaderMaterial</font>(2, <font color="#924B72">#PB_Material_CubicEnvShader</font>)
+<font color="#006666">MaterialShaderTexture</font>(2,<font color="#006666">TextureID</font>(0),<font color="#006666">LoadTexture</font>(2,&quot;MRAMOR6X6.jpg&quot;),0,0)
+<font color="#006666">MaterialShaderParameter</font>(2,1,&quot;glossy&quot;,<font color="#924B72">#PB_Shader_Float</font>,0.8,0,0,0)
+<b><font color="#006666">For</font></b> i=-1 <b><font color="#006666">To</font></b> 1
+  <b><font color="#006666">For</font></b> j=-1 <b><font color="#006666">To</font></b> 1
+    <b><font color="#006666">If</font></b> i&lt;&gt;0 <b><font color="#006666">Or</font></b> j&lt;&gt;0:<font color="#006666">CreateEntity</font>(-1,<font color="#006666">CreateCube</font>(1,1000),<font color="#006666"> MaterialID</font>(2),i*1000,-480,j*1000):<b><font color="#006666">EndIf</font></b>
+  <b><font color="#006666">Next</font></b>
+<b><font color="#006666">Next</font></b>
+<b><font color="#006666">CompilerEndIf</font></b>
+
+<font color="#006666">;Define Mesh = CreateCube(#PB_Any, 0.000000001)
+</font><b><font color="#006666">Define</font></b> Mesh =<font color="#006666"> LoadMesh</font>(<font color="#924B72">#PB_Any</font>, &quot;robot.mesh&quot;)
+
+<font color="#006666">;- Texture
+</font><b><font color="#006666">Define</font></b> Texture =<font color="#006666"> CreateTexture</font>(<font color="#924B72">#PB_Any</font>, 512, 512)
+
+<font color="#006666">;- Material
+</font><b><font color="#006666">Define</font></b> Material =<font color="#006666"> CreateMaterial</font>(<font color="#924B72">#PB_Any</font>,<font color="#006666"> TextureID</font>(<font color="#006666">LoadTexture</font>(<font color="#924B72">#PB_Any</font>, &quot;r2skin.jpg&quot;)))
+<font color="#006666">AddMaterialLayer</font>(Material,<font color="#006666"> TextureID</font>(Texture), <font color="#924B72">#PB_Material_Add</font>)
+
+<font color="#006666">;- Entity
+</font><b><font color="#006666">Define</font></b> Entity =<font color="#006666"> CreateEntity</font>(<font color="#924B72">#PB_Any</font>,<font color="#006666"> MeshID</font>(Mesh),<font color="#006666"> MaterialID</font>(Material))
+<font color="#006666">;HideEntity(Entity, 1)
+</font><font color="#006666">;StartEntityAnimation(Entity, &quot;Walk&quot;)
+</font><font color="#006666">;RotateEntity(Entity, 0, -90, 0)
+
+</font><font color="#006666">;Material = CreateMaterial(#PB_Any, LoadTexture(0, &quot;clouds.jpg&quot;))
+</font><font color="#006666">;RotateMaterial(Material, 0.05, 1)
+
+</font><font color="#006666">; Then create the billboard group and use the previous material
+</font><font color="#006666">;
+</font><font color="#006666">;Define Billboard = CreateBillboardGroup(#PB_Any, MaterialID(Material), 10, 10)
+
+</font><font color="#006666">; AddBillboard(Billboard, -20, 20, 0)
+</font><font color="#006666">; AddBillboard(Billboard,   0, 20, 0)
+</font><font color="#006666">; AddBillboard(Billboard,  20, 20, 0)
+
+</font>
+<b><font color="#006666">Procedure</font></b> <font color="#006666">menu</font>()
+  <b><font color="#006666">Protected</font></b> p=4
+  <b><font color="#006666">Macro</font></b> <font color="#006666">DT</font>(t1,etat=-1)
+<font color="#006666">    DrawText</font>(8,p,t1)
+    <b><font color="#006666">If</font></b> etat=0:<font color="#006666">DrawText</font>(140,p,&quot;OFF&quot;):<b><font color="#006666">ElseIf</font></b> etat=1:<font color="#006666">DrawText</font>(140,p,&quot;ON&quot;):<b><font color="#006666">EndIf</font></b>
+    p+17
+  <b><font color="#006666">EndMacro</font></b>
+<font color="#006666">  CreateSprite</font>(0,180,180,<font color="#924B72">#PB_Sprite_AlphaBlending</font>)
+<font color="#006666">  StartDrawing</font>(<font color="#006666">SpriteOutput</font>(0))
+<font color="#006666">  DrawingMode</font>(<font color="#924B72">#PB_2DDrawing_AllChannels</font>)
+<font color="#006666">  DrawingFont</font>(<font color="#006666">FontID</font>(0))
+<font color="#006666">  Box</font>(0,0,180,180,$22ffffff)
+<font color="#006666">  DrawingMode</font>(<font color="#924B72">#PB_2DDrawing_AllChannels</font>|<font color="#924B72">#PB_2DDrawing_Outlined</font>)
+<font color="#006666">  Box</font>(0,0,180,180,$44ffffff)
+<font color="#006666">  DrawingMode</font>(<font color="#924B72">#PB_2DDrawing_AllChannels</font>)
+<font color="#006666">  BackColor</font>($22ffffff)
+<font color="#006666">  FrontColor</font>($ffffffff)
+<font color="#006666">  dt</font>(&quot;Moving :&quot;)
+<font color="#006666">  dt</font>(&quot;Arrow keys + Mouse&quot;)
+<font color="#006666">  dt</font>(&quot;&quot;)
+<font color="#006666">  dt</font>(&quot;Controls :&quot;)
+  <font color="#006666">;dt(&quot;[F1] Diffuse light&quot;,diff)
+</font>  <font color="#006666">;dt(&quot;[F2] Specular light&quot;,spec)
+</font>  <font color="#006666">;dt(&quot;[F3] Global rotation&quot;,rotg)
+</font>  <font color="#006666">;dt(&quot;[F4] Local rotation&quot;,rotl)
+</font><font color="#006666">  dt</font>(&quot;[F12] Wireframe&quot;)
+<font color="#006666">  dt</font>(&quot;[Esc] / [Click]   Quit&quot;)
+<font color="#006666">  StopDrawing</font>()
+<b><font color="#006666">EndProcedure</font></b>
+
+<font color="#006666">LoadFont</font>(0,&quot;arial&quot;,10)
+<font color="#006666">menu</font>()
+
+
+i = 0
+<b><font color="#006666">Repeat</font></b>
+  <b><font color="#006666">While</font></b> <font color="#006666">WindowEvent</font>():<b><font color="#006666">Wend</font></b>
+<font color="#006666">  ExamineMouse</font>()
+  MouseX = -<font color="#006666">MouseDeltaX</font>() *  0.05
+  MouseY = -<font color="#006666">MouseDeltaY</font>() *  0.05
+<font color="#006666">  ExamineKeyboard</font>()
+  keyx=(-<font color="#006666">Bool</font>(<font color="#006666">KeyboardPushed</font>(<font color="#924B72">#PB_Key_Left</font>)&lt;&gt;0)+<font color="#006666">Bool</font>(<font color="#006666">KeyboardPushed</font>(<font color="#924B72">#PB_Key_Right</font>)&lt;&gt;0))*2
+  keyy=(-<font color="#006666">Bool</font>(<font color="#006666">KeyboardPushed</font>(<font color="#924B72">#PB_Key_Up</font>  )&lt;&gt;0)+<font color="#006666">Bool</font>(<font color="#006666">KeyboardPushed</font>(<font color="#924B72">#PB_Key_Down</font> )&lt;&gt;0))*2+-<font color="#006666">MouseWheel</font>()*50
+  modif+<font color="#006666">Bool</font>(<font color="#006666">KeyboardReleased</font>(<font color="#924B72">#PB_Key_Space</font>)&lt;&gt;0)
+  <b><font color="#006666">If</font></b> <font color="#006666">KeyboardReleased</font>(<font color="#924B72">#PB_Key_F1</font>):o\cpt=0:o\ef=1:modif=1:<b><font color="#006666">EndIf</font></b>
+  <b><font color="#006666">If</font></b> <font color="#006666">KeyboardReleased</font>(<font color="#924B72">#PB_Key_F2</font>):o\cpt=0:o\ef=2:modif=1:<b><font color="#006666">EndIf</font></b>
+  <b><font color="#006666">If</font></b> <font color="#006666">KeyboardReleased</font>(<font color="#924B72">#PB_Key_F3</font>):o\cpt=0:o\ef=3:modif=1:<b><font color="#006666">EndIf</font></b>
+  <b><font color="#006666">If</font></b> <font color="#006666">KeyboardReleased</font>(<font color="#924B72">#PB_Key_F4</font>):o\cpt=0:o\ef=4:modif=1:<b><font color="#006666">EndIf</font></b>
+<font color="#006666">  RotateCamera</font>(0, MouseY, MouseX, 0, <font color="#924B72">#PB_Relative</font>)
+<font color="#006666">  MoveCamera  </font>(0, KeyX, keyz, KeyY)
+  cpt+1
+  
+  <b><font color="#006666">If</font></b> i &gt; 0
+    <font color="#006666">;FreeEntity(Entity)
+</font>  <b><font color="#006666">EndIf</font></b>
+  <b><font color="#006666">If</font></b> (modif &amp; 1) <b><font color="#006666">And</font></b> (cpt%2=0):<font color="#006666">planmodif</font>(o):<b><font color="#006666">EndIf</font></b>
+<font color="#006666">  RenderWorld</font>()
+<font color="#006666">  glClear_</font>(<font color="#924B72">#GL_DEPTH_BUFFER_BIT</font>)
+<font color="#006666">  SetWindowTitle</font>(0, &quot;FPS: &quot;+<font color="#006666"> Engine3DStatus</font>(<font color="#924B72">#PB_Engine3D_AverageFPS</font>))
+  
+<font color="#006666">  menu</font>()
+<font color="#006666">  DisplayTransparentSprite</font>(0, 8,8, 50) <font color="#006666">; bug avec l'alpha
+</font>  <font color="#006666">;DisplayTransparentSprite(0, 108, 108, 255) ; bug avec l'alpha
+</font>  
+<font color="#006666">  FlipBuffers</font>()
+  i+1
+<b><font color="#006666">Until</font></b> <font color="#006666">KeyboardPushed</font>(<font color="#924B72">#PB_Key_Escape</font>) <b><font color="#006666">Or</font></b> <font color="#006666">MouseButton</font>(3)
+</font></pre>
+</body></html>

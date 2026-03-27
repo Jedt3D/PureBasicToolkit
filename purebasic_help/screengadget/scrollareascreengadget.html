@@ -1,0 +1,59 @@
+<html><head><title>ScrollAreaScreenGadget</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">ScrollAreaScreenGadget()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result = <font color="#006666"><b>ScrollAreaScreenGadget</b></font>(#ScreenGadget, x, y, Width, Height, ScrollAreaWidth, ScrollAreaHeight, ScrollStep)</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Creates a ScrollArea gadget in the current GadgetList. It's very useful when a gadget is 
+too big to fit the window dimension. In that case, it can be put into a scrollarea. All the 
+scrolling is handled automatically by the gadget. This is a container gadget, intended 
+to have one or several gadget in its scroll area. Once the gadget is created, 
+all future created gadgets will be created inside the scroll area. When all the needed 
+gadgets have been created, <a href="closescreengadgetlist.html">CloseScreenGadgetList()</a> must be called to return to the 
+previous GadgetList. <a href="openscreengadgetlist.html">OpenScreenGadgetList()</a> can be used later to add others gadgets 
+on the fly in the scroll area. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#ScreenGadget</i></td>
+<td width="90%"> 
+A number to identify the new gadget. <a href="../reference/purebasic_objects.html">#PB_Any</a> can 
+be used to auto-generate this number. 
+
+</td></tr>
+<tr><td><i>x, y, Width, Height</i></td>
+<td> 
+The position and dimensions of the new gadget. 
+
+</td></tr>
+<tr><td><i>ScrollAreaWidth, ScrollAreaHeight</i></td>
+<td> 
+The dimensions of the scrollable area inside the gadget. These can also be smaller than the outer dimensions, in 
+this case scrolling will be disabled. 
+
+</td></tr>
+<tr><td><i>ScrollStep (optional)</i></td>
+<td> 
+The amount of pixels to scroll when the user presses the scroll bar arrows. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Nonzero on success, zero otherwise. If <font color="#924B72">#PB_Any</font> was used as the #ScreenGadget parameter 
+then the return-value is the auto-generated gadget number on success. 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=screenwindowevent.html>ScreenWindowEvent()</a> - <a href=index.html>ScreenGadget Index</a> - <a href=scrollbarscreengadget.html>ScrollBarScreenGadget()</a> -><br><br>
+
+
+
+
+
+</body></html>

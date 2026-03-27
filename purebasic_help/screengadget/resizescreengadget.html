@@ -1,0 +1,45 @@
+<html><head><title>ResizeScreenGadget</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">ResizeScreenGadget()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+<font color="#006666"><b>ResizeScreenGadget</b></font>(#ScreenGadget, x, y, Width, Height)</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Resize the specified gadget to the given position and dimensions. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#Gadget</i></td>
+<td width="90%"> 
+The gadget to resize. 
+
+</td></tr>
+<tr><td><i>x, y, Width, Height</i></td>
+<td> 
+The new position and dimensions of the gadget. To ease the building of real-time resizable 
+Graphical User Interfaces (GUIs), <font color="#924B72">#PB_Ignore</font> can be passed as any parameter (x, y, Width or Height) and this 
+parameter will not be changed. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+None.
+
+
+</blockquote><p><b>Example</b></p><blockquote>
+
+<pre><font face="Courier New, Courier, mono" size="2">  [...]
+
+<font color="#006666">  ResizeScreenGadget</font>(0, <font color="#924B72">#PB_Ignore</font>, <font color="#924B72">#PB_Ignore</font>, 300, <font color="#924B72">#PB_Ignore</font>) <font color="#006666">; Only change the gadget width.</font>
+
+</font></pre>
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=renderscreengadgets.html>RenderScreenGadgets()</a> - <a href=index.html>ScreenGadget Index</a> - <a href=resizescreenwindow.html>ResizeScreenWindow()</a> -><br><br>
+
+</body></html>

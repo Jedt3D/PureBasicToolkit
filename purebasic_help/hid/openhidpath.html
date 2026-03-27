@@ -1,0 +1,43 @@
+<html><head><title>OpenHIDPath</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">OpenHIDPath()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result = <font color="#006666"><b>OpenHIDPath</b></font>(#HID, Path$)</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Open the specified HID device for read or write operations using a device path. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#HID</i></td>
+<td width="90%"> 
+The number to identify the HID device. 
+
+</td></tr>
+<tr><td><i>Path$</i></td>
+<td> 
+The platform-specific device path to open. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Returns nonzero if the device was opened successfully and zero if there was an error. 
+
+</blockquote><p><b>Remarks</b></p><blockquote>
+
+This function opens a HID device by its specific device path, which can be obtained through device enumeration with <a href="examinehids.html">ExamineHIDs()</a>. 
+
+</blockquote><p><b>See Also</b></p><blockquote>
+
+<a href="openhid.html">OpenHID()</a>, <a href="closehid.html">CloseHID()</a>, <a href="examinehids.html">ExamineHIDs()</a> 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=openhid.html>OpenHID()</a> - <a href=index.html>HID Index</a> - <a href=readhiddata.html>ReadHIDData()</a> -><br><br>
+
+</body></html>

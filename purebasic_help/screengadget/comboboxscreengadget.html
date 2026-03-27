@@ -1,0 +1,58 @@
+<html><head><title>ComboBoxScreenGadget</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">ComboBoxScreenGadget()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result = <font color="#006666"><b>ComboBoxScreenGadget</b></font>(#ScreenGadget, x, y, Width, Height [, Flags])</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Creates a ComboBox gadget in the current GadgetList. Once a ComboBox 
+is created, its list of items is empty. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#ScreenGadget</i></td>
+<td width="90%"> 
+A number to identify the new gadget. <a href="../reference/purebasic_objects.html">#PB_Any</a> can 
+be used to auto-generate this number. 
+
+</td></tr>
+<tr><td><i>x, y, Width, Height</i></td>
+<td> 
+The position and dimensions of the new gadget. 
+
+</td></tr>
+<tr><td><i>Flags (optional)</i></td>
+<td> 
+Not supported. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Nonzero on success, zero otherwise. If <font color="#924B72">#PB_Any</font> was used as the #ScreenGadget parameter 
+then the return-value is the auto-generated gadget number on success. 
+
+</blockquote><p><b>Remarks</b></p><blockquote>
+
+To add a 'mini help' to this gadget, use <a href="screengadgettooltip.html">ScreenGadgetToolTip()</a>. <br>
+<br>
+The following functions can be used to act on the list contents: <br>
+- <a href="addscreengadgetitem.html">AddScreenGadgetItem()</a>: Add an item. <br>
+- <a href="countscreengadgetitems.html">CountScreenGadgetItems()</a>: Count the items in the current combobox. <br>
+- <a href="clearscreengadgetitems.html">ClearScreenGadgetItems()</a>: Remove all the items. <br>
+- <a href="removescreengadgetitem.html">RemoveScreenGadgetItem()</a>: Remove an item. <br>
+<br>
+- <a href="getscreengadgetstate.html">GetScreenGadgetState()</a>: Get the index (starting from 0) of the current element. <br>
+- <a href="getscreengadgettext.html">GetScreenGadgetText()</a>: Get the (text) content of the current element. <br>
+- <a href="setscreengadgetstate.html">SetScreenGadgetState()</a>: Change the selected element. <br>
+- <a href="setscreengadgettext.html">SetScreenGadgetText()</a>: Set the displayed text. If the ComboBoxGadget is not editable, the text must be in the dropdown list. 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=closescreenwindow.html>CloseScreenWindow()</a> - <a href=index.html>ScreenGadget Index</a> - <a href=containerscreengadget.html>ContainerScreenGadget()</a> -><br><br>
+
+</body></html>

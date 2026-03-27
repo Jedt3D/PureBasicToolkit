@@ -1,0 +1,122 @@
+{
+  "name": "purebasic-toolkit",
+  "displayName": "PureBasic Toolkit",
+  "version": "0.2.1",
+  "publisher": "worajedt",
+  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, and check/compile/run commands.",
+  "license": "UNLICENSED",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#111b29",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jedt3D/PureBasicExtension.git"
+  },
+  "homepage": "https://github.com/Jedt3D/PureBasicExtension",
+  "bugs": {
+    "url": "https://github.com/Jedt3D/PureBasicExtension/issues"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "purebasic",
+    "pbcompiler",
+    "vscode",
+    "syntax-highlighting",
+    "snippets",
+    "compiler",
+    "language-support"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:purebasic",
+    "onCommand:purebasic.checkSyntax",
+    "onCommand:purebasic.compile",
+    "onCommand:purebasic.run"
+  ],
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -w -p .",
+    "package": "npm run build && vsce package",
+    "package:vsix": "npm run build && vsce package --out purebasic-toolkit-${npm_package_version}.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.2.2",
+    "typescript": "^5.8.3"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "purebasic",
+        "aliases": [
+          "PureBasic",
+          "purebasic"
+        ],
+        "extensions": [
+          ".pb",
+          ".pbi",
+          ".pbp"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "purebasic",
+        "scopeName": "source.purebasic",
+        "path": "./syntaxes/purebasic.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "purebasic",
+        "path": "./snippets/purebasic.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "purebasic.checkSyntax",
+        "title": "Check Syntax Current File",
+        "category": "PureBasic",
+        "icon": "$(check)"
+      },
+      {
+        "command": "purebasic.compile",
+        "title": "Compile Current File",
+        "category": "PureBasic",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "purebasic.run",
+        "title": "Run Current File",
+        "category": "PureBasic",
+        "icon": "$(play)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "purebasic.checkSyntax",
+          "when": "editorLangId == purebasic"
+        },
+        {
+          "command": "purebasic.compile",
+          "when": "editorLangId == purebasic"
+        },
+        {
+          "command": "purebasic.run",
+          "when": "editorLangId == purebasic"
+        }
+      ]
+    }
+  }
+}

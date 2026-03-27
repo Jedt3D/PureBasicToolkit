@@ -1,0 +1,56 @@
+<html><head><title>Command-line options for the IDE</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="5">Command-line options for the IDE</font></b></p>
+
+The PureBasic IDE allows you to modify the paths and files being used 
+from the command-line. This allows you to create several shortcuts that 
+start the IDE with different configurations for different users, or for 
+different projects. 
+
+<br>
+<br>
+
+There are also options for compiling PureBasic projects directly from the command-line. 
+Building a project from the command-line involves the same actions like at choosing the 
+'Build Target' or 'Build all Targets' from the <a href="../reference/ide_compiler.html">compiler menu</a>. 
+
+<br>
+<br>
+
+
+General options: 
+<pre><font face="Courier New, Courier, mono" size="2">  -v or --version             displays the IDE version and exits
+  -h or --help                displays a description of the command-line arguments
+</font></pre>
+
+Options for launching the IDE: 
+<pre><font face="Courier New, Courier, mono" size="2">  -p or --preferences &lt;file&gt;    loads/saves all the configuration to/from the given file
+  -t or --templates &lt;file&gt;      loads/saves the code templates from/to the given file
+  -a or --tools &lt;file&gt;          loads/saves the configuration of the external tool from/to this file
+  -s or --sourcepath &lt;path&gt;     overwrites the &quot;Source path&quot; setting from the preferences
+  -e or --explorerpath &lt;path&gt;   starts the Explorer tool with the given path
+  -l or --line &lt;Line number&gt;    moves the cursor to the given line number in the last opened file
+  -H or --history &lt;file&gt;        specify the file to use for the session history database
+  
+</font></pre>
+
+Options for building projects: 
+<pre><font face="Courier New, Courier, mono" size="2">  -b or --build &lt;file&gt;        specifies the project file to build
+  -T or --target &lt;target&gt;     specifies the target to build (the default is to build all targets)
+  -q or --quiet               hides all build messages except errors
+  -r or --readonly            does not update the project file after compiling (with new access time and build counters)
+</font></pre>
+
+The default files for -p -t and -a are saved in the .purebasic 
+subdirectory of your home directory. 
+
+
+<br>
+<br>
+
+You can also put the filenames of source files to load on the command-line. You can 
+even specify wildcards for them (so with &quot;*.pb&quot; you can load a whole directory). 
+
+
+
+</font></body></html>

@@ -1,0 +1,46 @@
+<html><head><title>SplitterScreenGadget</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">SplitterScreenGadget()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+Result = <font color="#006666"><b>SplitterScreenGadget</b></font>(#ScreenGadget, x, y, Width, Height, #ScreenGadget1, #ScreenGadget2 [, Flags])</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Creates an area divided into two parts (horizontally or vertically), each containing a gadget thread. 
+<br>
+The divider bar can be moved freely by the user and the two associated gadgets will be resized automatically. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#ScreenGadget</i></td>
+<td width="90%"> 
+The identification number of the new gadget. 
+<font color="#924B72">#PB_Any</font> can be used to automatically generate this number. 
+</td></tr>
+<tr><td><i>x, y, Width, Height</i></td>
+<td> 
+The position and dimensions of the new gadget. 
+</td></tr>
+<tr><td><i>#ScreenGadget1, #ScreenGadget2</i></td>
+<td> 
+The gadgets, which should be placed inside the splitter area. 
+</td></tr>
+<tr><td><i>Flags</i></td>
+<td> 
+#PB_Splitter_Vertical: The area will be separated vertically. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+
+Returns a non-zero value on success, zero otherwise. 
+If <font color="#924B72">#PB_Any</font> was used for the #ScreenGadget parameter, then the return value is the gadget ID number, generated automatically. 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=setscreengadgettext.html>SetScreenGadgetText()</a> - <a href=index.html>ScreenGadget Index</a> - <a href=stringscreengadget.html>StringScreenGadget()</a> -><br><br>
+
+</body></html>

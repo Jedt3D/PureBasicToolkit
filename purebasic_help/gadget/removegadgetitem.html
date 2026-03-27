@@ -1,0 +1,91 @@
+<html><head><title>RemoveGadgetItem</title><meta charset="utf-8"></head>
+<body bgcolor="#FFFFDF" link="#009999" vlink="#006666" alink="#006666">
+<font face="Arial" size="2"><p align="center"><b><font size="4">RemoveGadgetItem()</font></b></p>
+<p><b>Syntax</b></p><blockquote>
+<font color="#006666"><b>RemoveGadgetItem</b></font>(#Gadget, Position)</blockquote>
+
+</blockquote>
+<b>Description</b><br><blockquote>
+
+Removes an item of the specified gadget. 
+
+</blockquote><p><b>Parameters</b></p><blockquote>
+<style type="text/css">
+table.parameters { border-spacing: 0px; border-style: none; border-collapse: collapse; }
+table.parameters td { border-width: 1px; padding: 6px; border-style: solid; border-color: gray; vertical-align: top; font-family:Arial; font-size:10pt; }
+</style>
+<table width="90%" class="parameters">
+<tr><td width="10%"><i>#Gadget</i></td>
+<td width="90%"> 
+The gadget to use. 
+
+</td></tr>
+<tr><td><i>Position</i></td>
+<td> 
+The item to remove. The first item has the index 0. 
+
+</td></tr>
+</table>
+</blockquote><p><b>Return value</b></p><blockquote>
+None.
+
+
+</blockquote><p><b>Remarks</b></p><blockquote>
+
+The gadget type can be one of the following: 
+<br>
+<br>
+- <a href="comboboxgadget.html">ComboBoxGadget()</a> 
+<br>
+- <a href="editorgadget.html">EditorGadget()</a> 
+<br>
+- <a href="panelgadget.html">PanelGadget()</a> 
+<br>
+- <a href="listviewgadget.html">ListViewGadget()</a> 
+<br>
+- <a href="listicongadget.html">ListIconGadget()</a> 
+<br>
+- <a href="mdigadget.html">MDIGadget()</a> 
+<br>
+- <a href="treegadget.html">TreeGadget()</a> - If the removed item is a node, all child-items will be removed too. 
+
+</blockquote><p><b>Example:</b> Remove selected item in a ListIconGadget by pressing 'Delete'</p><blockquote>
+
+<pre><font face="Courier New, Courier, mono" size="2">  <b><font color="#006666">Enumeration</font></b> 
+    <font color="#924B72">#KeyDelete</font>
+  <b><font color="#006666">EndEnumeration</font></b>
+  
+  <b><font color="#006666">If</font></b> <font color="#006666">OpenWindow</font>(0, 100, 100, 300, 500, &quot;ListIcon Example&quot;, <font color="#924B72">#PB_Window_SystemMenu</font> | <font color="#924B72">#PB_Window_ScreenCentered</font>)
+<font color="#006666">    ListIconGadget</font>(0, 5, 5, 290, 290, &quot;Number&quot;, 100, <font color="#924B72">#PB_ListIcon_FullRowSelect</font> | <font color="#924B72">#PB_ListIcon_AlwaysShowSelection</font>)
+    <b><font color="#006666">For</font></b> i=1 <b><font color="#006666">To</font></b> 100
+<font color="#006666">      AddGadgetItem</font>(0, -1,<font color="#006666"> Str</font>(i))
+    <b><font color="#006666">Next</font></b>
+<font color="#006666">    StringGadget</font>(1, 5, 305, 290, 25, &quot;Edit me!&quot;)
+<font color="#006666">    EditorGadget</font>(2, 5, 335, 290, 100)
+<font color="#006666">    SetGadgetText</font>(2, &quot;And me too!&quot;)
+    
+    <b><font color="#006666">Repeat</font></b>
+      Event =<font color="#006666"> WaitWindowEvent</font>()
+      <b><font color="#006666">If</font></b> <font color="#006666">GetActiveGadget</font>() = 0
+<font color="#006666">        AddKeyboardShortcut</font>(0, <font color="#924B72">#PB_Shortcut_Delete</font>, <font color="#924B72">#KeyDelete</font>)
+      <b><font color="#006666">Else</font></b>
+<font color="#006666">        RemoveKeyboardShortcut</font>(0, <font color="#924B72">#PB_Shortcut_Delete</font>)
+      <b><font color="#006666">EndIf</font></b>
+      <b><font color="#006666">If</font></b> Event = <font color="#924B72">#PB_Event_Menu</font> <b><font color="#006666">And</font></b> <font color="#006666">EventMenu</font>() = <font color="#924B72">#KeyDelete</font>
+        i =<font color="#006666"> GetGadgetState</font>(0)
+        <b><font color="#006666">If</font></b> i &gt; -1
+<font color="#006666">          RemoveGadgetItem</font>(0, i)
+<font color="#006666">          SetGadgetState</font>(0, i)
+        <b><font color="#006666">EndIf</font></b>
+      <b><font color="#006666">EndIf</font></b>
+    <b><font color="#006666">Until</font></b> Event = <font color="#924B72">#PB_Event_CloseWindow</font>
+  <b><font color="#006666">EndIf</font></b>
+</font></pre>
+
+</blockquote><p><b>See Also</b></p><blockquote>
+
+<a href="addgadgetitem.html">AddGadgetItem()</a>, <a href="cleargadgetitems.html">ClearGadgetItems()</a>, <a href="countgadgetitems.html">CountGadgetItems()</a> 
+
+</Blockquote><p><b>Supported OS </b><Blockquote>All</Blockquote></p><center><- <a href=removegadgetcolumn.html>RemoveGadgetColumn()</a> - <a href=index.html>Gadget Index</a> - <a href=resizegadget.html>ResizeGadget()</a> -><br><br>
+
+</body></html>
