@@ -127,6 +127,10 @@ Current packaged artifact:
 
 - `purebasic-toolkit-0.2.1.vsix`
 
+Current release prep notes:
+
+- `docs/releases/v0.2.1.md`
+
 ## Source Material
 
 The extension should use these local sources as authorities:
