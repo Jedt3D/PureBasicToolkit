@@ -1,9 +1,9 @@
 {
   "name": "purebasic-toolkit",
   "displayName": "PureBasic Toolkit",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publisher": "worajedt",
-  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, diagnostics, lightweight navigation, and check/compile/run commands.",
+  "description": "PureBasic language support for VS Code with syntax highlighting, snippets, offline docs, project-aware diagnostics, lightweight navigation, and check/compile/run commands.",
   "license": "MIT",
   "icon": "media/icon.png",
   "galleryBanner": {
@@ -33,7 +33,8 @@
     "language-support",
     "offline-docs",
     "diagnostics",
-    "code-navigation"
+    "code-navigation",
+    "project-awareness"
   ],
   "engines": {
     "vscode": "^1.90.0"
@@ -155,6 +156,21 @@
           "type": "boolean",
           "default": true,
           "description": "Suggest XIncludeFile when IncludeFile is used for shared .pbi files."
+        },
+        "purebasic.diagnostics.missingIncludeFile": {
+          "type": "boolean",
+          "default": true,
+          "description": "Warn when IncludeFile or XIncludeFile points at a file that cannot be resolved."
+        },
+        "purebasic.diagnostics.unresolvedUseModule": {
+          "type": "boolean",
+          "default": true,
+          "description": "Warn when UseModule targets cannot be found in the current file, linked includes, or workspace scan."
+        },
+        "purebasic.diagnostics.unresolvedQualifiedSymbol": {
+          "type": "boolean",
+          "default": true,
+          "description": "Warn when Module::Symbol lookups cannot be resolved in the current file, linked includes, or workspace scan."
         }
       }
     }

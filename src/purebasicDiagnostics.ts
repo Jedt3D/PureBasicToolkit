@@ -1,6 +1,8 @@
 import * as path from "node:path";
 import * as vscode from "vscode";
 import { analyzePureBasicSource, type PureBasicDiagnosticRuleOptions, type PureBasicDiagnosticFinding } from "./purebasicDiagnosticsEngine";
+import { analyzePureBasicProjectContext, type PureBasicProjectDiagnosticRuleOptions } from "./purebasicProjectDiagnostics";
+import { collectCandidateUris } from "./purebasicWorkspaceContext";
 
 export class PureBasicDiagnosticsController implements vscode.Disposable {
   private readonly output: vscode.OutputChannel;
@@ -14,15 +16,15 @@ export class PureBasicDiagnosticsController implements vscode.Disposable {
   public register(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
       this.collection,
-      vscode.workspace.onDidOpenTextDocument((document) => this.refreshDocument(document)),
-      vscode.workspace.onDidChangeTextDocument((event) => this.refreshDocument(event.document)),
+      vscode.workspace.onDidOpenTextDocument((document) => void this.refreshDocument(document)),
+      vscode.workspace.onDidChangeTextDocument((event) => void this.refreshDocument(event.document)),
       vscode.workspace.onDidCloseTextDocument((document) => this.collection.delete(document.uri)),
       vscode.workspace.onDidChangeConfiguration((event) => this.handleConfigurationChange(event)),
       this,
     );
 
     for (const document of vscode.workspace.textDocuments) {
-      this.refreshDocument(document);
+      void this.refreshDocument(document);
     }
   }
 
@@ -37,11 +39,11 @@ export class PureBasicDiagnosticsController implements vscode.Disposable {
 
     this.log("PureBasic diagnostics configuration changed. Refreshing open documents.");
     for (const document of vscode.workspace.textDocuments) {
-      this.refreshDocument(document);
+      void this.refreshDocument(document);
     }
   }
 
-  private refreshDocument(document: vscode.TextDocument): void {
+  private async refreshDocument(document: vscode.TextDocument): Promise<void> {
     if (!isPureBasicSourceDocument(document)) {
       this.collection.delete(document.uri);
       return;
@@ -54,7 +56,9 @@ export class PureBasicDiagnosticsController implements vscode.Disposable {
     }
 
     const findings = analyzePureBasicSource(document.getText(), this.getRuleOptions(config));
-    const diagnostics = findings.map((finding) => createDiagnostic(document, finding));
+    const projectFindings = await this.getProjectAwareFindings(document, config);
+    const allFindings = [...findings, ...projectFindings];
+    const diagnostics = allFindings.map((finding) => createDiagnostic(document, finding));
     this.collection.set(document.uri, diagnostics);
   }
 
@@ -64,6 +68,44 @@ export class PureBasicDiagnosticsController implements vscode.Disposable {
       consoleExecutableFormatHint: config.get<boolean>("diagnostics.consoleExecutableFormatHint", true),
       preferXIncludeFile: config.get<boolean>("diagnostics.preferXIncludeFile", true),
     };
+  }
+
+  private getProjectRuleOptions(config: vscode.WorkspaceConfiguration): PureBasicProjectDiagnosticRuleOptions {
+    return {
+      missingIncludeFile: config.get<boolean>("diagnostics.missingIncludeFile", true),
+      unresolvedUseModule: config.get<boolean>("diagnostics.unresolvedUseModule", true),
+      unresolvedQualifiedSymbol: config.get<boolean>("diagnostics.unresolvedQualifiedSymbol", true),
+    };
+  }
+
+  private async getProjectAwareFindings(
+    document: vscode.TextDocument,
+    config: vscode.WorkspaceConfiguration,
+  ): Promise<PureBasicDiagnosticFinding[]> {
+    const options = this.getProjectRuleOptions(config);
+    if (!options.missingIncludeFile && !options.unresolvedUseModule && !options.unresolvedQualifiedSymbol) {
+      return [];
+    }
+
+    const candidateUris = await collectCandidateUris(document, 120);
+    const relatedSources = await Promise.all(
+      candidateUris.map(async (uri) => {
+        const candidate = uri.fsPath === document.uri.fsPath ? document : await vscode.workspace.openTextDocument(uri);
+        return {
+          filePath: candidate.fileName,
+          source: candidate.getText(),
+        };
+      }),
+    );
+
+    return analyzePureBasicProjectContext(
+      {
+        filePath: document.fileName,
+        source: document.getText(),
+      },
+      relatedSources,
+      options,
+    );
   }
 
   private log(message: string): void {

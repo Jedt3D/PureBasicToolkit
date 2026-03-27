@@ -4,7 +4,7 @@
 
 PureBasic editor support for VS Code, developed from a clean-start scaffold in this repository and grounded in the official PureBasic help and example corpus.
 
-## What Ships in 0.5.0
+## What Ships in 0.6.0
 
 - PureBasic file recognition for `.pb`, `.pbi`, and `.pbp`
 - donor-based syntax highlighting tuned against real PureBasic sources
@@ -13,6 +13,7 @@ PureBasic editor support for VS Code, developed from a clean-start scaffold in t
 - lightweight PureBasic-aware diagnostics for common setup and style gotchas
 - Outline/document symbols for core PureBasic code structures
 - lightweight Go to Definition support for local procedures, modules, and include-linked files
+- project-aware diagnostics for missing include files, unresolved `UseModule`, and unresolved `Module::Symbol` lookups
 - `PureBasic: Open Documentation for Symbol`
 - `PureBasic: Check Syntax Current File`
 - `PureBasic: Compile Current File`
@@ -44,7 +45,7 @@ PureBasic editor support for VS Code, developed from a clean-start scaffold in t
 
 ## Current Status
 
-The project now has a working Phase 5 baseline.
+The project now has a working Phase 6 baseline.
 
 This repo already contains:
 
@@ -56,6 +57,7 @@ This repo already contains:
 - donor-based syntax highlighting and a stronger snippet pack for PureBasic editing
 - offline docs and lightweight diagnostics grounded in the local PureBasic corpus
 - lightweight navigation support for local code structure and definitions
+- project-aware diagnostics that check include and module wiring instead of only single-file style rules
 
 The extension product path is now being built at the repo root.
 
@@ -100,6 +102,9 @@ Current diagnostics behavior:
 - warns when `EnableExplicit` is missing
 - hints when console APIs are detected, including the IDE path to `Executable Format = Console`
 - suggests `XIncludeFile` when shared `.pbi` includes still use `IncludeFile`
+- warns when `IncludeFile` or `XIncludeFile` points at a missing file
+- warns when `UseModule` targets cannot be found
+- warns when `Module::Symbol` lookups cannot be resolved locally
 - can be tuned through `purebasic.diagnostics.*` settings
 
 Current navigation behavior:
@@ -111,8 +116,8 @@ Current navigation behavior:
 
 ## Planned Next Layers
 
-- broader project awareness for includes and workspace shape
-- higher-signal diagnostics for common PureBasic mistakes
+- more advanced cross-file/project awareness when real PureBasic projects demand it
+- richer diagnostics for suspicious API names and safer scope/type issues
 - evaluate whether richer language features justify a future LSP layer
 - packaging, CI, tags, and GitHub Releases
 
@@ -156,11 +161,11 @@ npm run package:vsix
 
 Current packaged artifact:
 
-- `purebasic-toolkit-0.5.0.vsix`
+- `purebasic-toolkit-0.6.0.vsix`
 
 Current release prep notes:
 
-- `docs/releases/v0.5.0.md`
+- `docs/releases/v0.6.0.md`
 
 ## GitHub Release Flow
 
@@ -169,7 +174,7 @@ Recommended release flow:
 1. merge the release PR into `main`
 2. open GitHub Actions
 3. run the `Release` workflow manually on `main`
-4. enter the version, for example `0.5.0`
+4. enter the version, for example `0.6.0`
 
 What the manual release workflow does:
 

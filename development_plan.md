@@ -299,38 +299,43 @@ Version `0.5.0` establishes the first lightweight navigation slice with:
 - local procedure and module definition lookup
 - include-aware file search before workspace fallback
 
-## Phase 5 - Release Hardening and Distribution
+## Phase 6 - Project Awareness and Smarter Diagnostics
 
 ### Objective
 
-Make the extension shippable and repeatable.
+Turn the navigation groundwork into higher-signal project-aware guidance without committing to a full LSP.
 
 ### Features
 
-- packaged `.vsix`
-- versioning discipline
-- release notes
-- GitHub Actions CI
-- GitHub tag and release automation
+- missing include diagnostics
+- unresolved `UseModule` diagnostics
+- unresolved `Module::Symbol` diagnostics
+- shared include/workspace lookup between diagnostics and navigation
 
 ### TODO
 
-- add packaging script
-- add `vsce` or equivalent packaging workflow
-- define version bump rules
-- create CI workflows for pull requests and `main`
-- create release workflow for tags
-- generate release artifacts
-- attach `.vsix` to GitHub Releases
-- verify installation from packaged artifact
+- add missing include file warnings
+- detect missing module imports in local project context
+- detect unresolved qualified module member lookups safely
+- share include/workspace candidate discovery across navigation and diagnostics
+- keep the new warnings configurable through settings
 
 ### Exit Criteria
 
-- a tagged release produces a `.vsix`
-- GitHub release includes notes and assets
-- install-from-release works cleanly
+- project-aware warnings catch real local mistakes without spamming valid files
+- include and module diagnostics improve common troubleshooting loops
+- the extension still feels lightweight and local-first
 
-## Phase 6 - Optional Advanced Track
+### Phase 6 Baseline Shipped
+
+Version `0.6.0` establishes the first project-aware diagnostics slice with:
+
+- missing include file warnings
+- unresolved `UseModule` warnings
+- unresolved `Module::Symbol` warnings
+- shared include/workspace discovery used by navigation and diagnostics
+
+## Phase 7 - Optional Advanced Track
 
 ### Objective
 
@@ -361,7 +366,9 @@ Suggested milestone versions:
 - `0.4.0`
   - diagnostics and quality-of-life improvements
 - `0.5.0`
-  - release automation and repeatable packaging
+  - lightweight navigation and local definitions
+- `0.6.0`
+  - project-aware diagnostics and shared workspace lookup
 - `1.0.0`
   - stable, documented, releasable extension with strong end-to-end workflow
 

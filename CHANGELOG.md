@@ -6,6 +6,23 @@ The format is based on Keep a Changelog and the project follows Semantic Version
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-03-27
+
+### Added
+
+- project-aware diagnostics for:
+  - missing include files
+  - unresolved `UseModule` targets
+  - unresolved `Module::Symbol` lookups
+- shared workspace/include candidate discovery used by both diagnostics and navigation
+- user settings under `purebasic.diagnostics.*` for the new project-aware rules
+
+### Changed
+
+- bumped the extension to its first Phase 6 project-awareness baseline
+- expanded Marketplace metadata to reflect project-aware diagnostics support
+- updated the README and release docs for the new diagnostics workflow
+
 ## [0.5.0] - 2026-03-27
 
 ### Added

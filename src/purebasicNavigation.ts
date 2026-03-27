@@ -1,5 +1,3 @@
-import * as fs from "node:fs";
-import * as path from "node:path";
 import * as vscode from "vscode";
 import {
   findBestDefinitionMatch,
@@ -10,6 +8,7 @@ import {
   type PureBasicNavigationSymbol,
   type PureBasicNavigationSymbolKind,
 } from "./purebasicNavigationEngine";
+import { collectCandidateUris as collectWorkspaceCandidateUris } from "./purebasicWorkspaceContext";
 
 export class PureBasicNavigationController implements vscode.Disposable {
   private readonly output: vscode.OutputChannel;
@@ -61,51 +60,7 @@ export class PureBasicNavigationController implements vscode.Disposable {
 }
 
 async function collectCandidateUris(document: vscode.TextDocument): Promise<vscode.Uri[]> {
-  const discovered = new Map<string, vscode.Uri>();
-  const queue: vscode.Uri[] = [document.uri];
-  const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
-
-  while (queue.length > 0 && discovered.size < 50) {
-    const uri = queue.shift();
-    if (!uri || discovered.has(uri.fsPath)) {
-      continue;
-    }
-
-    discovered.set(uri.fsPath, uri);
-
-    const parsed = parsePureBasicNavigation((await vscode.workspace.openTextDocument(uri)).getText());
-    for (const includePath of parsed.includePaths) {
-      const resolved = resolveIncludeUri(uri, includePath);
-      if (resolved && !discovered.has(resolved.fsPath)) {
-        queue.push(resolved);
-      }
-    }
-  }
-
-  if (workspaceFolder) {
-    const files = await vscode.workspace.findFiles(
-      new vscode.RelativePattern(workspaceFolder, "**/*.{pb,pbi}"),
-      "**/node_modules/**",
-      200,
-    );
-
-    for (const uri of files) {
-      if (!discovered.has(uri.fsPath)) {
-        discovered.set(uri.fsPath, uri);
-      }
-    }
-  }
-
-  return [document.uri, ...Array.from(discovered.values()).filter((uri) => uri.fsPath !== document.uri.fsPath)];
-}
-
-function resolveIncludeUri(baseUri: vscode.Uri, includePath: string): vscode.Uri | undefined {
-  const resolved = path.resolve(path.dirname(baseUri.fsPath), includePath);
-  if (!fs.existsSync(resolved)) {
-    return undefined;
-  }
-
-  return vscode.Uri.file(resolved);
+  return await collectWorkspaceCandidateUris(document, 200);
 }
 
 function createLocation(uri: vscode.Uri, definition: PureBasicDefinitionEntry): vscode.Location {
